@@ -1,27 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
+
+    public TextAsset csvFile;
     int[,] map;
+
+    void LoadCSV()
+    {
+        //CSVファイルを読み込む
+        string[] lines = csvFile.text.Split('\n');
+        int height = lines.Length;
+        int width = lines[0].Split(',').Length;
+
+        map = new int[height, width];
+
+        for(int y=0;y<height;y++)
+        {
+            string[] lineData = lines[y].Trim().Split(',');
+            for(int x=0;x<width;x++)
+            {
+                int.TryParse(lineData[x], out map[y, x]);
+            }
+        }
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        map = new int[,]
-        {
-           {1,1,1,1,1,1,1,1,1 },
-           {1,0,0,0,0,0,0,0,1 },
-           {1,0,0,0,0,0,0,0,1 },
-           {1,0,0,0,0,0,0,0,1 },
-           {1,0,0,0,0,0,0,0,1 },
-           {1,1,1,1,1,1,1,1,1 },
-        };
+        LoadCSV();
 
-       
-        Vector3 position = Vector3.zero;
+
+         Vector3 position = Vector3.zero;
 
         //マップチップでの描画
         for (int y = 0; y < map.GetLength(0); y++)
@@ -35,7 +50,7 @@ public class GameManagerScript : MonoBehaviour
                     Instantiate(block, position, Quaternion.identity);
                 }
             
-                }
+            }
         }
     }
 
