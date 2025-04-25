@@ -44,7 +44,7 @@ public class GameManagerScript : MonoBehaviour
             for (int x = 0; x < map.GetLength(1); x++)
             {
                 position.x = x;
-                position.y = -y+5;
+                position.y = -y + 5;
                 if (map[y, x] == 1)
                 {
                     Instantiate(block, position, Quaternion.identity);
