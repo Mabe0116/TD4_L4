@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
-
     public TextAsset csvFile;
     int[,] map;
 
@@ -35,21 +34,26 @@ public class GameManagerScript : MonoBehaviour
     {
         LoadCSV();
 
+        Vector3 position = Vector3.zero;
 
-         Vector3 position = Vector3.zero;
+        float cameraHeight = Camera.main.orthographicSize * 2f;
+        float cameraWidth = cameraHeight * Camera.main.aspect;
 
-        //マップチップでの描画
+        Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
+
+        //マップチップの描画
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                position.x = x;
-                position.y = -y + 5;
+                //カメラの左上の位置から描画
+                position.x = topLeft.x + x ;
+                position.y = topLeft.y - y ;
+
                 if (map[y, x] == 1)
                 {
                     Instantiate(block, position, Quaternion.identity);
                 }
-            
             }
         }
     }
