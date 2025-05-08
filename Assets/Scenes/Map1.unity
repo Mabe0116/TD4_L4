@@ -392,6 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block: {fileID: 3634918870475206855, guid: 61b53f9bb50ffa24380a9d5ccefbc35d, type: 3}
+  csvFile: {fileID: 4900000, guid: d089e4ea6d9485644bb2567d15d6460c, type: 3}
 --- !u!4 &1767937416
 Transform:
   m_ObjectHideFlags: 0
