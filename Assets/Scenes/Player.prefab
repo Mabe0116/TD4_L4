@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5779538529748717188}
   - component: {fileID: 5779538529748717199}
   - component: {fileID: 5779538529748717184}
+  - component: {fileID: 5532512381031572039}
+  - component: {fileID: 7315665394472184466}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -130,4 +132,32 @@ MonoBehaviour:
   rb: {fileID: 5779538529748717199}
   moveSpeed: 5
   moveJump: 5
-  Cube: 1
+  linkedPlayer: {fileID: 917592998305690229, guid: 1922fb2f528feb949b4b3f9548225b3f, type: 3}
+  rayDistance: 0.6
+--- !u!114 &5532512381031572039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779538529748717189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc8b5f1bb648454fb71d998b43b608d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7315665394472184466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779538529748717189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c71047528e3eb8468377640e8d7c0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchingWall: 0
+  touchingCeiling: 0
+  touchingGround: 0

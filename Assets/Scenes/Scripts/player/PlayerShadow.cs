@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerShadow : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float moveSpeed = 5.0f;
-    public float moveJump = 5.0f;
-    public bool Cube = true;
+    public Transform player;
+    public Rigidbody playerRb;
+    public Rigidbody shadowRb;
+
+    public float followSpeed = 50f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,37 +19,14 @@ public class PlayerShadow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 rayPosition = transform.position;
-        Ray ray = new Ray(rayPosition, Vector3.down);
-        float distance = 0.6f;
-        Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-        Cube = Physics.Raycast(ray, distance);
+        // 上のプレイヤーの位置を上下反転した位置に追従
+        Vector3 targetPos = new Vector3(player.position.x, -player.position.y, player.position.z);
+        Vector3 newPos = Vector3.Lerp(shadowRb.position, targetPos, Time.fixedDeltaTime * followSpeed);
+        shadowRb.MovePosition(newPos);
 
-        Vector3 v = rb.velocity;
-        if (Input.GetKey(KeyCode.D))
-        {
-            v.x = moveSpeed;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            v.x = -moveSpeed;
-        }
-        else
-        {
-            v.x = 0;
-        }
-        if (UnityEngine.Input.GetButton("Jump") || UnityEngine.Input.GetKey(KeyCode.Space))
-        {
-            if (Cube == true)
-            {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-                v.y = moveJump;
-            }
-            else
-            {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.yellow);
-            }
-        }
-        rb.velocity = v;
+        // 上のプレイヤーの速度を上下反転してコピー（ジャンプ方向も合わせる）
+        Vector3 v = playerRb.velocity;
+        v.y = -v.y;
+        shadowRb.velocity = v;
     }
 }
