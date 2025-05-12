@@ -29,8 +29,9 @@ public class Player : MonoBehaviour
 
         // 両方の状態を見て、接地してるかどうかチェック（どちらかが接地でOK）
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) &&
-            (myState.touchingGround || linkedState.touchingGround) &&
-            !myState.touchingCeiling && !linkedState.touchingCeiling)
+            (myState.touchingGround || linkedState.touchingCeiling) &&
+               !myState.touchingCeiling &&
+               !linkedState.touchingGround)
         {
             jumpRequested = true;
         }
@@ -42,19 +43,26 @@ public class Player : MonoBehaviour
         Vector3 rayPosition = transform.position;
         float distance = 0.6f;
 
-        myState.touchingGround = Physics.Raycast(rayPosition, Vector3.down, distance);
-        myState.touchingCeiling = Physics.Raycast(rayPosition, Vector3.up, distance);
+        myState.touchingGround = Physics.Raycast(transform.position, Vector3.down, distance);
+        myState.touchingCeiling = Physics.Raycast(transform.position, Vector3.up, distance);
         myState.touchingWallLeft = Physics.Raycast(rayPosition, Vector3.left, distance);
         myState.touchingWallRight = Physics.Raycast(rayPosition, Vector3.right, distance);
+
+        // 下のプレイヤーの状態も同様にチェック
+        Vector3 linkedRayPosition = linkedPlayer.position;
+        linkedState.touchingGround = Physics.Raycast(linkedPlayer.position, Vector3.down, distance);
+        linkedState.touchingCeiling = Physics.Raycast(linkedPlayer.position, Vector3.up, distance);
+        linkedState.touchingWallLeft = Physics.Raycast(linkedRayPosition, Vector3.left, distance);
+        linkedState.touchingWallRight = Physics.Raycast(linkedRayPosition, Vector3.right, distance);
 
         // 移動計算
         Vector3 move = Vector3.zero;
 
-        if (!myState.touchingWallRight && horizontalInput > 0)
+        if (!(myState.touchingWallRight || linkedState.touchingWallRight) && horizontalInput > 0)
         {
             move.x = horizontalInput * moveSpeed * Time.fixedDeltaTime;
         }
-        else if (!myState.touchingWallLeft && horizontalInput < 0)
+        else if (!(myState.touchingWallLeft || linkedState.touchingWallLeft) && horizontalInput < 0)
         {
             move.x = horizontalInput * moveSpeed * Time.fixedDeltaTime;
         }
@@ -62,8 +70,14 @@ public class Player : MonoBehaviour
         // 上プレイヤー移動
         rb.MovePosition(rb.position + move);
 
-        // 下プレイヤーも全く同じ移動（反転なし）
-        linkedRb.MovePosition(linkedRb.position + move);
+        // 下のプレイヤー：X は同じ、Y は反転
+        Vector3 mirroredPos = new Vector3(
+            rb.position.x + move.x,
+            -rb.position.y, // Y反転
+            rb.position.z
+        );
+        linkedRb.MovePosition(mirroredPos);
+      
 
         // ジャンプ処理（両方に AddForce）
         if (jumpRequested)
