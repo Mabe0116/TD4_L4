@@ -6,22 +6,23 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
+    public GameObject ghostBlock;
     public TextAsset csvFile;
     int[,] map;
 
     void LoadCSV()
     {
-        //CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+        //CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
 
         map = new int[height, width];
 
-        for(int y=0;y<height;y++)
+        for (int y = 0; y < height; y++)
         {
             string[] lineData = lines[y].Trim().Split(',');
-            for(int x=0;x<width;x++)
+            for (int x = 0; x < width; x++)
             {
                 int.TryParse(lineData[x], out map[y, x]);
             }
@@ -41,18 +42,23 @@ public class GameManagerScript : MonoBehaviour
 
         Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
 
-        //ƒ}ƒbƒvƒ`ƒbƒv‚Ì•`‰æ
+        //ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                //ƒJƒƒ‰‚Ì¶ã‚ÌˆÊ’u‚©‚ç•`‰æ
+                //ã‚«ãƒ¡ãƒ©ã®å·¦ä¸Šã®ä½ç½®ã‹ã‚‰æç”»
                 position.x = topLeft.x + x ;
                 position.y = topLeft.y - y ;
 
                 if (map[y, x] == 1)
                 {
                     Instantiate(block, position, Quaternion.identity);
+                }
+
+                else if (map[y, x] == 2)
+                {
+                    Instantiate(ghostBlock, position, Quaternion.identity);
                 }
             }
         }
