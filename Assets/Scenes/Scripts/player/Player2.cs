@@ -26,7 +26,7 @@ public class Player2 : MonoBehaviour
         Cube = Physics.Raycast(ray, distance);
 
         rb.useGravity = false;  // Unity‚Ìd—Í‚ğ–³Œø‰»
-        rb.AddForce(Vector3.up * 2.1f, ForceMode.Acceleration);
+        rb.AddForce(Vector3.up * 1.5f, ForceMode.Acceleration);
 
         Vector3 v = rb.velocity;
         if (Input.GetKey(KeyCode.D))
