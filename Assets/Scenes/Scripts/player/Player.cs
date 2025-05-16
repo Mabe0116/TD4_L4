@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Vector3 rayPosition = transform.position;
+        Ray ray = new Ray(rayPosition, Vector3.down);
         float distance = 0.6f;
         Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
         Cube = Physics.Raycast(ray, distance);
