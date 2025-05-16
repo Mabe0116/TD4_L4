@@ -18,7 +18,7 @@ public class Goal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR    
         // 時間が止まっていて、ゲームがクリア済み、かつ Space キーを押したら再開
         if (isGameCleared && Time.timeScale == 0f && Input.GetKeyDown(KeyCode.Space))
         {
