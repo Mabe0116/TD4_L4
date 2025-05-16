@@ -7,6 +7,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
     public GameObject ghostBlock;
+    public GameObject goalBlock;
     public TextAsset csvFile;
     int[,] map;
 
@@ -59,6 +60,11 @@ public class GameManagerScript : MonoBehaviour
                 else if (map[y, x] == 2)
                 {
                     Instantiate(ghostBlock, position, Quaternion.identity);
+                }
+
+                else if (map[y, x] == 3)
+                {
+                    Instantiate(goalBlock, position, Quaternion.identity);
                 }
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,17 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public GameObject clearUI;
+    private static GameObject spawnedClearUI;
+    private static bool isGameCleared = false;
 
-    private bool isGameCleared = false;
+    private static bool isUpPlayerInGoal = false;
+    private static bool isBottomPlayerInGoal = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -23,20 +28,57 @@ public class Goal : MonoBehaviour
         if (isGameCleared && Time.timeScale == 0f && Input.GetKeyDown(KeyCode.Space))
         {
             Time.timeScale = 1f;
-            clearUI.SetActive(false); // UIを消したい場合
+
+            if (spawnedClearUI != null)
+            {
+                Destroy(spawnedClearUI);
+                spawnedClearUI = null;
+            }
             isGameCleared = false;
+            isUpPlayerInGoal = false;
+            isBottomPlayerInGoal = false;
         }
 #endif
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // 接触したオブジェクトの名前で判定
-        if (other.gameObject.name == "Player")
+        if (other.CompareTag("UpPlayer"))
         {
-            clearUI.SetActive(true);
+            isUpPlayerInGoal = true;
+        }
+        else if (other.CompareTag("BottomPlayer"))
+        {
+            isBottomPlayerInGoal = true;
+        }
+
+        //二つゴールに入っていたら
+        if (isUpPlayerInGoal && isBottomPlayerInGoal && !isGameCleared)
+        {
+            if (spawnedClearUI == null)
+            {
+                spawnedClearUI = Instantiate(clearUI);
+                spawnedClearUI.SetActive(true);
+
+            }
+
+            
             Time.timeScale = 0f;
             isGameCleared = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("UpPlayer"))
+        {
+            isUpPlayerInGoal = false;
+            //Debug.Log("isUpPlayerHitGoal");
+        }
+        else if (other.CompareTag("BottomPlayer"))
+        {
+            isBottomPlayerInGoal = false;
+            //Debug.Log("isBottomPlayerHitGoal");
         }
     }
 }
