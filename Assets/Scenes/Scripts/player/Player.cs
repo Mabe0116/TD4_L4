@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public float moveJump = 4.0f;
     public bool Cube = true;
 
-    //public bool isTouchingBlock2 = false;
     public Player2 lowerPlayerScript; // 下のプレイヤー
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -75,22 +75,6 @@ public class Player : MonoBehaviour
 
     }
 
-    //void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Block2"))
-    //    {
-    //        isTouchingBlock2 = true;
-    //    }
-    //}
-
-    //void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Block2"))
-    //    {
-    //        isTouchingBlock2 = false;
-    //    }
-    //}
-
     public bool IsOnBlock2()
     {
         Vector3 rayOrigin = transform.position;
@@ -104,6 +88,14 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+
+    public bool IsGrounded()
+    {
+        Vector3 rayOrigin = transform.position;
+        float rayDistance = 0.6f;
+        Ray ray = new Ray(rayOrigin, Vector3.up);
+        return Physics.Raycast(ray, rayDistance); // 何かに接地していれば true
     }
 
 }

@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+ï»¿using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,8 @@ public class Player2 : MonoBehaviour
     public float moveJump = 5.0f;
     public bool Cube = true;
 
-    public Player upperPlayerScript; // ã‚ÌƒvƒŒƒCƒ„[
+    public Player upperPlayerScript; // ä¸Šã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,24 +41,27 @@ public class Player2 : MonoBehaviour
         {
             v.x = 0;
         }
-        if (UnityEngine.Input.GetButton("Jump") || UnityEngine.Input.GetKey(KeyCode.Space)){
-            if (Cube == true)
+
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)))
+        {
+            bool canJumpFromGround = IsGrounded();
+            bool canJumpBecauseUpperPlayerOnBlock = upperPlayerScript != null && upperPlayerScript.IsOnBlock2();
+
+            if (canJumpFromGround || canJumpBecauseUpperPlayerOnBlock)
             {
-                Debug.DrawRay(rayPosition, Vector3.up * distance, Color.red);
                 v.y = -moveJump;
-            }
-            else
-            {
-                Debug.DrawRay(rayPosition, Vector3.up * distance, Color.yellow);
+                isJumping = true;
             }
         }
+
         rb.velocity = v;
+
     }
 
     void FixedUpdate()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        // ğŒ‚ğ–‚½‚·‚Æ‚«‚¾‚¯ãŒü‚«‰Á‘¬“x‚ğ‰Á‚¦‚éi•‚‚©‚·j
+        // æ¡ä»¶ã‚’æº€ãŸã™ã¨ãã ã‘ä¸Šå‘ãåŠ é€Ÿåº¦ã‚’åŠ ãˆã‚‹ï¼ˆæµ®ã‹ã™ï¼‰
         if (upperPlayerScript == null || !upperPlayerScript.IsOnBlock2())
         {
             rb.useGravity = false;
@@ -65,10 +69,16 @@ public class Player2 : MonoBehaviour
         }
         else
         {
-            // ã‚ªBlock2‚ÉG‚ê‚Ä‚é ¨ d—Í–³Œø‰»AY‘¬“xƒŠƒZƒbƒg
+            // ä¸ŠãŒBlock2ã«è§¦ã‚Œã¦ã‚‹ â†’ é‡åŠ›ç„¡åŠ¹åŒ–ã€Yé€Ÿåº¦ãƒªã‚»ãƒƒãƒˆ
             rb.useGravity = false;
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            if (!isJumping)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            }
         }
+        isJumping = false;
     }
 
     public bool IsOnBlock3()
@@ -84,6 +94,14 @@ public class Player2 : MonoBehaviour
         }
 
         return false;
+    }
+
+    public bool IsGrounded()
+    {
+        Vector3 rayOrigin = transform.position;
+        float rayDistance = 0.6f;
+        Ray ray = new Ray(rayOrigin, Vector3.up);
+        return Physics.Raycast(ray, rayDistance); // ä½•ã‹ã«æ¥åœ°ã—ã¦ã„ã‚Œã° true
     }
 
 }
