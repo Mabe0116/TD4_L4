@@ -49,7 +49,17 @@ public class GameManagerScript : MonoBehaviour
                 {
                     Instantiate(block, position, Quaternion.identity);
                 }
-            
+                if (map[y, x] == 2)
+                {
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    obj.tag = "Block2";
+                }
+                if (map[y, x] == 3)
+                {
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    obj.tag = "Block3";
+                }
+
             }
         }
     }
