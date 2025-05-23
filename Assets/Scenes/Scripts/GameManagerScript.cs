@@ -49,8 +49,8 @@ public class GameManagerScript : MonoBehaviour
             for (int x = 0; x < map.GetLength(1); x++)
             {
                 //カメラの左上の位置から描画
-                position.x = topLeft.x + x +3.8f;
-                position.y = topLeft.y - y +1.4f;
+                position.x = topLeft.x + x+9f;
+                position.y = topLeft.y - y;
 
                 if (map[y, x] == 1)
                 {
