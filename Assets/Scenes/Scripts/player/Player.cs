@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public Rigidbody rb;
     public float moveSpeed = 5.0f;
-    public float moveJump = 4.0f;
+    public float moveJump = 5.0f;
     public bool Cube = true;
 
     public Player2 lowerPlayerScript; // ‰º‚ÌƒvƒŒƒCƒ„[

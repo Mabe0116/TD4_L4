@@ -84,7 +84,7 @@ public class Player2 : MonoBehaviour
     public bool IsOnBlock3()
     {
         Vector3 rayOrigin = transform.position;
-        float rayDistance = 0.6f;
+        float rayDistance = 0.7f;
         Ray ray = new Ray(rayOrigin, Vector3.up);
         RaycastHit hit;
 
