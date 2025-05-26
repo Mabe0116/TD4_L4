@@ -13,7 +13,7 @@ public class GameManagerScript : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVファイルを読み込む
+        //CSV�t�@�C����ǂݍ���
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
@@ -43,12 +43,12 @@ public class GameManagerScript : MonoBehaviour
 
         Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
 
-        //マップチップの描画
+        //�}�b�v�`�b�v�̕`��
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                //カメラの左上の位置から描画
+                //�J�����̍���̈ʒu����`��
                 position.x = topLeft.x + x +3.8f;
                 position.y = topLeft.y - y +1.4f;
 
@@ -56,16 +56,17 @@ public class GameManagerScript : MonoBehaviour
                 {
                     Instantiate(block, position, Quaternion.identity);
                 }
-
-                else if (map[y, x] == 2)
+                if (map[y, x] == 2)
                 {
-                    Instantiate(ghostBlock, position, Quaternion.identity);
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    obj.tag = "Block2";
+                }
+                if (map[y, x] == 3)
+                {
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    obj.tag = "Block3";
                 }
 
-                else if (map[y, x] == 3)
-                {
-                    Instantiate(goalBlock, position, Quaternion.identity);
-                }
             }
         }
     }
