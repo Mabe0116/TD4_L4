@@ -7,8 +7,29 @@ public class Map2 : MonoBehaviour
 {
     public GameObject block;
 
+    //private List<Transform> moveBlocks = new List<Transform>();
+
+    private Vector3 MoveBlock;
+
+    //private Vector3 MoveBlock2;
+
     public TextAsset csvFile;
     int[,] map2;
+
+    private class MovingBlock
+    {
+        public Transform transform;
+        public Vector3 startPos;
+
+        public MovingBlock(Transform t)
+        {
+            transform = t;
+            startPos = t.position;
+        }
+    }
+
+    private List<MovingBlock> moveBlocks = new List<MovingBlock>();
+
 
     void LoadCSV()
     {
@@ -19,6 +40,7 @@ public class Map2 : MonoBehaviour
 
         map2 = new int[height, width];
 
+        
         for (int y = 0; y < height; y++)
         {
             string[] lineData = lines[y].Trim().Split(',');
@@ -37,6 +59,9 @@ public class Map2 : MonoBehaviour
 
 
         Vector3 position = Vector3.zero;
+
+        MoveBlock = transform.position;
+        //MoveBlock2 = transform.position;
 
         //マップチップでの描画
         for (int y = 0; y < map2.GetLength(0); y++)
@@ -59,7 +84,23 @@ public class Map2 : MonoBehaviour
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
                     obj.tag = "Block3";
                 }
+                if (map2[y, x] == 4)
+                {
+                    if (map2[y, x] == 4)
+                    {
+                        GameObject obj = Instantiate(block, position, Quaternion.identity);
+                        obj.tag = "MoveBlock";
+                        obj.transform.localScale = new Vector3(3f, 1f, 1f);
+                        moveBlocks.Add(new MovingBlock(obj.transform));
+                    }
 
+                }
+
+                //if (map2[y, x] == 5)
+                //{
+                //    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                //    obj.tag = "MoveBlock2";
+                //}
             }
         }
 }
@@ -67,6 +108,14 @@ public class Map2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float offset = Mathf.Sin(Time.time) * 1.0f;
+
+        foreach (MovingBlock move in moveBlocks)
+        {
+            Vector3 pos = move.startPos;
+            move.transform.position = new Vector3(pos.x + offset, pos.y, pos.z);
+        }
     }
+
 }
+

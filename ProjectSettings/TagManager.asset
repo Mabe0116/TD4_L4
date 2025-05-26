@@ -7,6 +7,8 @@ TagManager:
   - playerSpawnPoint
   - Block2
   - Block3
+  - MoveBlock
+  - MoveBlock2
   layers:
   - Default
   - TransparentFX

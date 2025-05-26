@@ -3,7 +3,9 @@ guid: b77bd36e5acdf9c4e89de156723f8cc1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - block: {fileID: 3634918870475206855, guid: 61b53f9bb50ffa24380a9d5ccefbc35d, type: 3}
+  - csvFile: {fileID: 4900000, guid: ebcff719185919e4e82480066238c2ee, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
