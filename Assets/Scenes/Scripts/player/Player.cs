@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,24 +10,35 @@ public class Player : MonoBehaviour
     public bool Cube = true;
 
     public Player2 lowerPlayerScript; // 下のプレイヤー
+    private bool jumpRequested = false;
     private bool isJumping = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // 接地Ray
         Vector3 rayPosition = transform.position;
         Ray ray = new Ray(rayPosition, Vector3.down);
         float distance = 0.6f;
         Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
         Cube = Physics.Raycast(ray, distance);
 
+        // ジャンプ判定
+        bool canJumpFromGround = IsGrounded();
+        bool canJumpBecauseLowerPlayerOnBlock = lowerPlayerScript != null && lowerPlayerScript.IsOnBlock3();
+
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
+            && (canJumpFromGround || canJumpBecauseLowerPlayerOnBlock))
+        {
+            jumpRequested = true;
+            isJumping = true;
+        }
+    }
+
+    void FixedUpdate()
+    {
         Vector3 v = rb.velocity;
+
+        // 横移動
         if (Input.GetKey(KeyCode.D))
         {
             v.x = moveSpeed;
@@ -41,38 +51,39 @@ public class Player : MonoBehaviour
         {
             v.x = 0;
         }
-        if (UnityEngine.Input.GetButton("Jump") || UnityEngine.Input.GetKey(KeyCode.Space))
+
+        // ジャンプ処理
+        if (jumpRequested)
         {
-            if (Cube == true)
-            {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-                v.y = moveJump;
-            }
-            else
-            {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.yellow);
-            }
+            v.y = moveJump;
+            jumpRequested = false;
         }
+
         rb.velocity = v;
-    }
 
-    void FixedUpdate()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-
+        // 重力制御
         if (lowerPlayerScript != null && lowerPlayerScript.IsOnBlock3())
         {
-            // 下のSphereがBlock2に触れてる → 上を浮かせる
             rb.useGravity = false;
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Yを止める
+
+            // ジャンプ中でなければY速度を止めて浮く
+            if (!isJumping)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            }
         }
         else
         {
-            // 普段は落下（重力を自分でかける）
-            rb.useGravity = false; // Unityの重力は使わない
-            rb.AddForce(Vector3.up * -9.81f, ForceMode.Acceleration); // 自前の重力
+            rb.useGravity = false;
+            rb.AddForce(Vector3.down * 9.81f, ForceMode.Acceleration);
         }
 
+        // 空中でジャンプ直後でも、ジャンプ中を解除
+        // ただし、これは任意でタイミングを調整できます（例：Y速度が負になったら）
+        if (rb.velocity.y <= 0f)
+        {
+            isJumping = false;
+        }
     }
 
     public bool IsOnBlock2()
@@ -94,8 +105,7 @@ public class Player : MonoBehaviour
     {
         Vector3 rayOrigin = transform.position;
         float rayDistance = 0.6f;
-        Ray ray = new Ray(rayOrigin, Vector3.up);
-        return Physics.Raycast(ray, rayDistance); // 何かに接地していれば true
+        Ray ray = new Ray(rayOrigin, Vector3.down);
+        return Physics.Raycast(ray, rayDistance);
     }
-
 }
