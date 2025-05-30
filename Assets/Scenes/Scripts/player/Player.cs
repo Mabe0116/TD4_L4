@@ -67,4 +67,5 @@ public class Player : MonoBehaviour
     {
         rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
+
 }
