@@ -7,36 +7,30 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public float moveSpeed = 5.0f;
     public float moveJump = 5.0f;
-    public bool Cube = true;
+    public float gravityScale = 1.0f;
+    private bool isBlock = true;
 
-    public Player2 lowerPlayerScript; // 下のプレイヤー
-    private bool jumpRequested = false;
-    private bool isJumping = false;
+    void Start()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        rb.useGravity = false;
+    }
 
     void Update()
     {
-        // 接地Ray
-        Vector3 rayPosition = transform.position;
-        Ray ray = new Ray(rayPosition, Vector3.down);
-        float distance = 0.6f;
-        Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-        Cube = Physics.Raycast(ray, distance);
-
-        // ジャンプ判定
-        bool canJumpFromGround = IsGrounded();
-        bool canJumpBecauseLowerPlayerOnBlock = lowerPlayerScript != null && lowerPlayerScript.IsOnBlock3();
-
-        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
-            && (canJumpFromGround || canJumpBecauseLowerPlayerOnBlock))
-        {
-            jumpRequested = true;
-            isJumping = true;
-        }
-    }
-
-    void FixedUpdate()
-    {
         Vector3 v = rb.velocity;
+
+        Vector3 rayPosition = transform.position;
+
+        // gravityScaleの符号に応じてRayの方向を上下に切り替え
+        Vector3 rayDirection = Vector3.down * Mathf.Sign(gravityScale);
+        float distance = 0.6f;
+
+        Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
+        isBlock = Physics.Raycast(rayPosition, rayDirection, distance);
 
         // 横移動
         if (Input.GetKey(KeyCode.D))
@@ -52,60 +46,25 @@ public class Player : MonoBehaviour
             v.x = 0;
         }
 
-        // ジャンプ処理
-        if (jumpRequested)
+        if (isBlock)
         {
-            v.y = moveJump;
-            jumpRequested = false;
-        }
-
-        rb.velocity = v;
-
-        // 重力制御
-        if (lowerPlayerScript != null && lowerPlayerScript.IsOnBlock3())
-        {
-            rb.useGravity = false;
-
-            // ジャンプ中でなければY速度を止めて浮く
-            if (!isJumping)
+            Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                //v.y = moveJump;
+                v.y = moveJump * Mathf.Sign(gravityScale);
             }
         }
         else
         {
-            rb.useGravity = false;
-            rb.AddForce(Vector3.down * 9.81f, ForceMode.Acceleration);
+            Debug.DrawRay(rayPosition, rayDirection * distance, Color.yellow);
         }
 
-        // 空中でジャンプ直後でも、ジャンプ中を解除
-        // ただし、これは任意でタイミングを調整できます（例：Y速度が負になったら）
-        if (rb.velocity.y <= 0f)
-        {
-            isJumping = false;
-        }
+        rb.velocity = new Vector3(v.x, v.y, 0);
     }
 
-    public bool IsOnBlock2()
+    void FixedUpdate()
     {
-        Vector3 rayOrigin = transform.position;
-        float rayDistance = 0.6f;
-        Ray ray = new Ray(rayOrigin, Vector3.down);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, rayDistance))
-        {
-            return hit.collider.CompareTag("Block2");
-        }
-
-        return false;
-    }
-
-    public bool IsGrounded()
-    {
-        Vector3 rayOrigin = transform.position;
-        float rayDistance = 0.6f;
-        Ray ray = new Ray(rayOrigin, Vector3.down);
-        return Physics.Raycast(ray, rayDistance);
+        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
 }
