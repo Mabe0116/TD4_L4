@@ -13,7 +13,7 @@ public class GameManagerScript : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
+        //CSVE½tE½@E½CE½E½E½E½Ç‚İï¿½E½E½
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
@@ -43,12 +43,12 @@ public class GameManagerScript : MonoBehaviour
 
         Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
 
-        //ï¿½}ï¿½bï¿½vï¿½`ï¿½bï¿½vï¿½Ì•`ï¿½ï¿½
+        //E½}E½bE½vE½`E½bE½vE½Ì•`E½E½
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½
+                //E½JE½E½E½E½E½Ìï¿½E½E½ÌˆÊ’uE½E½E½E½`E½E½
                 position.x = topLeft.x + x +3.8f;
                 position.y = topLeft.y - y +1.4f;
 
