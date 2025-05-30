@@ -304,7 +304,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1066857126
 Rigidbody:
@@ -331,14 +331,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066857121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33ba1fa9626e4694a8978330d0fe8203, type: 3}
+  m_Script: {fileID: 11500000, guid: 2750432e909b22d49819b2ff44b61ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1066857126}
   moveSpeed: 5
-  moveJump: 6
-  Cube: 1
-  upperPlayerScript: {fileID: 1776435808}
+  moveJump: 5
+  gravityScale: -1
 --- !u!1 &1462777119
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +491,7 @@ GameObject:
   - component: {fileID: 1776435811}
   - component: {fileID: 1776435810}
   - component: {fileID: 1776435809}
-  - component: {fileID: 1776435808}
+  - component: {fileID: 1776435814}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -500,23 +499,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1776435808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776435807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf71ee1c3b296e44e9608052dca708ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1776435809}
-  moveSpeed: 5
-  moveJump: 6
-  Cube: 1
-  lowerPlayerScript: {fileID: 1066857127}
 --- !u!54 &1776435809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -609,5 +591,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1776435814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776435807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2750432e909b22d49819b2ff44b61ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1776435809}
+  moveSpeed: 5
+  moveJump: 5
+  gravityScale: 1

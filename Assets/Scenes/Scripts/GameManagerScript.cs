@@ -49,17 +49,30 @@ public class GameManagerScript : MonoBehaviour
                 {
                     Instantiate(block, position, Quaternion.identity);
                 }
-                if (map[y, x] == 2)
+                else if (map[y, x] == 2)
                 {
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
-                    obj.tag = "Block2";
-                }
-                if (map[y, x] == 3)
-                {
-                    GameObject obj = Instantiate(block, position, Quaternion.identity);
-                    obj.tag = "Block3";
-                }
 
+                    // 透明度を設定
+                    Renderer rend = obj.GetComponent<Renderer>();
+                    if (rend != null)
+                    {
+                        Material mat = rend.material; // インスタンスを取得
+                        Color color = mat.color;
+                        color.a = 0f; 
+                        mat.color = color;
+
+                        // マテリアルのレンダリングモードを透明対応に変更
+                        mat.SetFloat("_Mode", 3); // 3 = Transparent
+                        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                        mat.SetInt("_ZWrite", 0);
+                        mat.DisableKeyword("_ALPHATEST_ON");
+                        mat.EnableKeyword("_ALPHABLEND_ON");
+                        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                        mat.renderQueue = 3000;
+                    }
+                }
             }
         }
     }
