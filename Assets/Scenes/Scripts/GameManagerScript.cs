@@ -1,11 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
+    public GameObject ghostBlock;
+    public GameObject goalBlock;
     public GameObject spike;
 
     public TextAsset csvFile;
@@ -13,17 +16,17 @@ public class GameManagerScript : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+        //CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
 
         map = new int[height, width];
 
-        for(int y=0;y<height;y++)
+        for (int y = 0; y < height; y++)
         {
             string[] lineData = lines[y].Trim().Split(',');
-            for(int x=0;x<width;x++)
+            for (int x = 0; x < width; x++)
             {
                 int.TryParse(lineData[x], out map[y, x]);
             }
@@ -36,16 +39,22 @@ public class GameManagerScript : MonoBehaviour
     {
         LoadCSV();
 
+        Vector3 position = Vector3.zero;
 
-         Vector3 position = Vector3.zero;
+        float cameraHeight = Camera.main.orthographicSize * 2f;
+        float cameraWidth = cameraHeight * Camera.main.aspect;
 
-        //ƒ}ƒbƒvƒ`ƒbƒv‚Å‚Ì•`‰æ
+        Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
+
+        //ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                position.x = x;
-                position.y = -y + 5;
+                //ã‚«ãƒ¡ãƒ©ã®å·¦ä¸Šã®ä½ç½®ã‹ã‚‰æç”»
+                position.x = topLeft.x + x +3.8f;
+                position.y = topLeft.y - y +1.4f;
+
                 if (map[y, x] == 1)
                 {
                     Instantiate(block, position, Quaternion.identity);
@@ -54,16 +63,16 @@ public class GameManagerScript : MonoBehaviour
                 {
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
 
-                    // “§–¾“x‚ğİ’è
+                    // é€æ˜åº¦ã‚’è¨­å®š
                     Renderer rend = obj.GetComponent<Renderer>();
                     if (rend != null)
                     {
-                        Material mat = rend.material; // ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+                        Material mat = rend.material; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
                         Color color = mat.color;
                         color.a = 0f; 
                         mat.color = color;
 
-                        // ƒ}ƒeƒŠƒAƒ‹‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOƒ‚[ƒh‚ğ“§–¾‘Î‰‚É•ÏX
+                        // ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’é€æ˜å¯¾å¿œã«å¤‰æ›´
                         mat.SetFloat("_Mode", 3); // 3 = Transparent
                         mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                         mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -73,6 +82,11 @@ public class GameManagerScript : MonoBehaviour
                         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
                         mat.renderQueue = 3000;
                     }
+                }
+                else if (map[y, x] == 3)
+                {
+                    //ã‚´ãƒ¼ãƒ«
+                    Instantiate(goalBlock, position, Quaternion.identity);
                 }
                 if (map[y, x] == 4)
                 {

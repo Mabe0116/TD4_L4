@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - playerSpawnPoint
+  - UpPlayer
+  - BottomPlayer
   - Block2
   - Block3
   - MoveBlock
