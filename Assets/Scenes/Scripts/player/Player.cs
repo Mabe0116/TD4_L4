@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,28 +6,33 @@ public class Player : MonoBehaviour
 {
     public Rigidbody rb;
     public float moveSpeed = 5.0f;
-    public float moveJump = 4.0f;
-    public bool Cube = true;
+    public float moveJump = 5.0f;
+    public float gravityScale = 1.0f;
+    private bool isBlock = true;
 
-    //public bool isTouchingBlock2 = false;
-    public Player2 lowerPlayerScript; // 下のプレイヤー
-
-    // Start is called before the first frame update
     void Start()
     {
-        
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        rb.useGravity = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 rayPosition = transform.position;
-        Ray ray = new Ray(rayPosition, Vector3.down);
-        float distance = 0.6f;
-        Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-        Cube = Physics.Raycast(ray, distance);
-
         Vector3 v = rb.velocity;
+
+        Vector3 rayPosition = transform.position;
+
+        // gravityScaleの符号に応じてRayの方向を上下に切り替え
+        Vector3 rayDirection = Vector3.down * Mathf.Sign(gravityScale);
+        float distance = 0.6f;
+
+        Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
+        isBlock = Physics.Raycast(rayPosition, rayDirection, distance);
+
+        // 横移動
         if (Input.GetKey(KeyCode.D))
         {
             v.x = moveSpeed;
@@ -41,87 +45,26 @@ public class Player : MonoBehaviour
         {
             v.x = 0;
         }
-        if (UnityEngine.Input.GetButton("Jump") || UnityEngine.Input.GetKey(KeyCode.Space))
+
+        if (isBlock)
         {
-            if (Cube == true)
+            Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.red);
-                v.y = moveJump;
-            }
-            else
-            {
-                Debug.DrawRay(rayPosition, Vector3.down * distance, Color.yellow);
+                //v.y = moveJump;
+                v.y = moveJump * Mathf.Sign(gravityScale);
             }
         }
-        rb.velocity = v;
+        else
+        {
+            Debug.DrawRay(rayPosition, rayDirection * distance, Color.yellow);
+        }
+
+        rb.velocity = new Vector3(v.x, v.y, 0);
     }
 
     void FixedUpdate()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-
-        if (lowerPlayerScript != null && lowerPlayerScript.IsOnBlock3())
-        {
-            // 下のSphereがBlock2に触れてる → 上を浮かせる
-            rb.useGravity = false;
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Yを止める
-        }
-        else
-        {
-            // 普段は落下（重力を自分でかける）
-            rb.useGravity = false; // Unityの重力は使わない
-            rb.AddForce(Vector3.up * -9.81f, ForceMode.Acceleration); // 自前の重力
-        }
-
+        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
-
-    //とげの当たり判定
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Spike"))
-        {
-            Debug.Log("Die(上)");
-           
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        transform.position = new Vector3(0, 5, 0);
-        rb.velocity = Vector3.zero;
-    }
-
-
-    //void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Block2"))
-    //    {
-    //        isTouchingBlock2 = true;
-    //    }
-    //}
-
-    //void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Block2"))
-    //    {
-    //        isTouchingBlock2 = false;
-    //    }
-    //}
-
-    public bool IsOnBlock2()
-    {
-        Vector3 rayOrigin = transform.position;
-        float rayDistance = 0.6f;
-        Ray ray = new Ray(rayOrigin, Vector3.down);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, rayDistance))
-        {
-            return hit.collider.CompareTag("Block2");
-        }
-
-        return false;
-    }
-
 }
