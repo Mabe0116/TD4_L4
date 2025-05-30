@@ -1,6 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
@@ -13,7 +14,7 @@ public class GameManagerScript : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVE½tE½@E½CE½E½E½E½Ç‚İï¿½E½E½
+        //CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
@@ -43,12 +44,12 @@ public class GameManagerScript : MonoBehaviour
 
         Vector3 topLeft = Camera.main.transform.position + new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
 
-        //E½}E½bE½vE½`E½bE½vE½Ì•`E½E½
+        //ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®æç”»
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                //E½JE½E½E½E½E½Ìï¿½E½E½ÌˆÊ’uE½E½E½E½`E½E½
+                //ã‚«ãƒ¡ãƒ©ã®å·¦ä¸Šã®ä½ç½®ã‹ã‚‰æç”»
                 position.x = topLeft.x + x +3.8f;
                 position.y = topLeft.y - y +1.4f;
 
@@ -60,16 +61,16 @@ public class GameManagerScript : MonoBehaviour
                 {
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
 
-                    // “§–¾“x‚ğİ’è
+                    // é€æ˜åº¦ã‚’è¨­å®š
                     Renderer rend = obj.GetComponent<Renderer>();
                     if (rend != null)
                     {
-                        Material mat = rend.material; // ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+                        Material mat = rend.material; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
                         Color color = mat.color;
                         color.a = 0f; 
                         mat.color = color;
 
-                        // ƒ}ƒeƒŠƒAƒ‹‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOƒ‚[ƒh‚ğ“§–¾‘Î‰‚É•ÏX
+                        // ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’é€æ˜å¯¾å¿œã«å¤‰æ›´
                         mat.SetFloat("_Mode", 3); // 3 = Transparent
                         mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                         mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -79,6 +80,11 @@ public class GameManagerScript : MonoBehaviour
                         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
                         mat.renderQueue = 3000;
                     }
+                }
+                else if (map[y, x] == 3)
+                {
+                    //ã‚´ãƒ¼ãƒ«
+                    Instantiate(goalBlock, position, Quaternion.identity);
                 }
             }
         }
