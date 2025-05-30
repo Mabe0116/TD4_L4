@@ -71,6 +71,24 @@ public class Player2 : MonoBehaviour
         }
     }
 
+    //Ç∆Ç∞ÇÃìñÇΩÇËîªíË
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            Debug.Log("Die(â∫)");
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        //èâä˙à íu
+        transform.position = new Vector3(0, -5, 0);
+        rb.velocity = Vector3.zero;
+    }
+
+
     public bool IsOnBlock3()
     {
         Vector3 rayOrigin = transform.position;

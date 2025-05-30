@@ -3,7 +3,10 @@ guid: f3ef782b45e30c14a81020648c36adb5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - block: {instanceID: 0}
+  - spike: {fileID: 919132149155446097, guid: 24c1e72b4ed1eb6418923ee4cf552c0e, type: 3}
+  - csvFile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
+    public GameObject spike;
 
     public TextAsset csvFile;
     int[,] map;
@@ -69,6 +70,13 @@ public class GameManagerScript : MonoBehaviour
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
                     obj.tag = "MoveBlock2";
                 }
+                if (map[y, x] == 6)
+                {
+                    GameObject obj = Instantiate(spike, position, Quaternion.identity);
+                    obj.tag = "Spike";
+                    Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                }
+
             }
         }
     }

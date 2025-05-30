@@ -9,6 +9,7 @@ TagManager:
   - Block3
   - MoveBlock
   - MoveBlock2
+  - Spike
   layers:
   - Default
   - TransparentFX
