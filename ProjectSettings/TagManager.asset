@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - playerSpawnPoint
-  - Block2
-  - Block3
   layers:
   - Default
   - TransparentFX
