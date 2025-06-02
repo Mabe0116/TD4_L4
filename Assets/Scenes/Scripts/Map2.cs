@@ -6,6 +6,7 @@ using UnityEngine;
 public class Map2 : MonoBehaviour
 {
     public GameObject block;
+    public GameObject spike;
 
     //private List<Transform> moveBlocks = new List<Transform>();
 
@@ -95,12 +96,17 @@ public class Map2 : MonoBehaviour
                     }
 
                 }
-
                 //if (map2[y, x] == 5)
                 //{
                 //    GameObject obj = Instantiate(block, position, Quaternion.identity);
                 //    obj.tag = "MoveBlock2";
                 //}
+                if (map2[y, x] == 6)
+                {
+                    GameObject obj = Instantiate(spike, position, Quaternion.identity);
+                    obj.tag = "Spike";
+                    Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                }
             }
         }
 }
