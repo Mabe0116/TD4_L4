@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 
@@ -37,6 +38,12 @@ public class Goal : MonoBehaviour
             isGameCleared = false;
             isUpPlayerInGoal = false;
             isBottomPlayerInGoal = false;
+
+            if (Input.GetKeyDown(KeyCode.Space) || isGameCleared == true)
+            {
+                SceneManager.LoadScene("Map2");
+            }
+
         }
 #endif
     }
@@ -59,10 +66,8 @@ public class Goal : MonoBehaviour
             {
                 spawnedClearUI = Instantiate(clearUI);
                 spawnedClearUI.SetActive(true);
-
             }
 
-            
             Time.timeScale = 0f;
             isGameCleared = true;
         }
