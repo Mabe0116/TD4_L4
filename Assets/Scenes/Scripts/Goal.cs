@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Goal : MonoBehaviour
@@ -37,6 +38,11 @@ public class Goal : MonoBehaviour
             isGameCleared = false;
             isUpPlayerInGoal = false;
             isBottomPlayerInGoal = false;
+
+            if (Input.GetKeyDown(KeyCode.Space) || isGameCleared == true)
+            {
+                SceneManager.LoadScene("Title");
+            }
         }
 #endif
     }
