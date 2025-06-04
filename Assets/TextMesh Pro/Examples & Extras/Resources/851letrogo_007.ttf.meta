@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: a2f94ec540a526c478cdf0d7f4e3f327
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - 851Letrogo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3ea42705c0adf2d4fbda90bf2de312d2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
