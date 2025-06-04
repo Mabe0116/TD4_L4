@@ -3,7 +3,12 @@ guid: f3ef782b45e30c14a81020648c36adb5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - block: {instanceID: 0}
+  - ghostBlock: {instanceID: 0}
+  - goalBlock: {instanceID: 0}
+  - csvFile: {instanceID: 0}
+  - transparentMaterial: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
