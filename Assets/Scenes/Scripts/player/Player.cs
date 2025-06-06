@@ -32,6 +32,16 @@ public class Player : MonoBehaviour
         Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
         isBlock = Physics.Raycast(rayPosition, rayDirection, distance);
 
+        rb.velocity = new Vector3(v.x, v.y, 0);
+
+        // Rキーを押したときの位置リセット処理
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            float y = gravityScale < 0 ? 0.4f : 2.4f;
+            transform.position = new Vector3(2.7f, y, transform.position.z);
+            rb.velocity = Vector3.zero;
+        }
+
         // 横移動
         if (Input.GetKey(KeyCode.D))
         {
