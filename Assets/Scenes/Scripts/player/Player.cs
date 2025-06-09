@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(v.x, v.y, 0);
 
         // Rキーを押したときの位置リセット処理
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared)
         {
             float y = gravityScale < 0 ? 0.4f : 2.4f;
             transform.position = new Vector3(2.7f, y, transform.position.z);

@@ -11,6 +11,8 @@ public class Goal : MonoBehaviour
     private static GameObject spawnedClearUI;
     private static bool isGameCleared = false;
 
+    public static bool IsGameCleared => isGameCleared;
+
     private static bool isUpPlayerInGoal = false;
     private static bool isBottomPlayerInGoal = false;
 
