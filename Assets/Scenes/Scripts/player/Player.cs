@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared)
         {
             float y = gravityScale < 0 ? 0.4f : 2.4f;
-            transform.position = new Vector3(2.7f, y, transform.position.z);
+            transform.position = new Vector3(0.8f, y, transform.position.z);
             rb.velocity = Vector3.zero;
         }
 
