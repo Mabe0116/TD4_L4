@@ -96,11 +96,30 @@ public class Map2 : MonoBehaviour
                     }
 
                 }
-                //if (map2[y, x] == 5)
-                //{
-                //    GameObject obj = Instantiate(block, position, Quaternion.identity);
-                //    obj.tag = "MoveBlock2";
-                //}
+
+                if (map2[y, x] == 5)
+                {
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    // ìßñæìxÇê›íË
+                    Renderer rend = obj.GetComponent<Renderer>();
+                    if (rend != null)
+                    {
+                        Material mat = rend.material;
+                        Color color = mat.color;
+                        color.a = 0f;
+                        mat.color = color;
+
+                        mat.SetFloat("_Mode", 3);
+                        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                        mat.SetInt("_ZWrite", 0);
+                        mat.DisableKeyword("_ALPHATEST_ON");
+                        mat.EnableKeyword("_ALPHABLEND_ON");
+                        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                        mat.renderQueue = 3000;
+                    }
+                }
+
                 if (map2[y, x] == 6)
                 {
                     GameObject obj = Instantiate(spike, position, Quaternion.identity);
