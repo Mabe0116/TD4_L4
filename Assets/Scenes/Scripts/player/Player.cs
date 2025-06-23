@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
 
         Vector3 rayPosition = transform.position;
 
+        string sceneName = SceneManager.GetActiveScene().name;
+
         // gravityScaleの符号に応じてRayの方向を上下に切り替え
         Vector3 rayDirection = Vector3.down * Mathf.Sign(gravityScale);
         float distance = 0.6f;
@@ -35,10 +38,16 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(v.x, v.y, 0);
 
         // Rキーを押したときの位置リセット処理
-        if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared)
+        if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared && sceneName == "Map1")
         {
             float y = gravityScale < 0 ? 0.4f : 2.4f;
             transform.position = new Vector3(2.4f, y, transform.position.z);
+            rb.velocity = Vector3.zero;
+        }
+        if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared && sceneName == "Map2")
+        {
+            float y = gravityScale < 0 ? -2f : 0.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
             rb.velocity = Vector3.zero;
         }
 
