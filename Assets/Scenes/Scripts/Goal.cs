@@ -39,6 +39,7 @@ public class Goal : MonoBehaviour
             isUpPlayerInGoal = false;
             isBottomPlayerInGoal = false;
 
+
             if (Input.GetKeyDown(KeyCode.Space) || isGameCleared == true)
             {
                 SceneManager.LoadScene("Map2");

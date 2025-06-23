@@ -18,8 +18,10 @@ public class TitleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        // ¡‚ÌƒV[ƒ“‚ª "Title" ‚Ì‚Æ‚«‚¾‚¯ SPACE ‚ğ‹–‰Â
+        if (SceneManager.GetActiveScene().name == "Title" && Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("SPACE pressed on Title. Loading Map1...");
             SceneManager.LoadScene("Map1");
         }
 
