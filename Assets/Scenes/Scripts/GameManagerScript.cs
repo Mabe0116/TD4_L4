@@ -14,6 +14,8 @@ public class GameManagerScript : MonoBehaviour
     public TextAsset csvFile;
     int[,] map;
 
+    public Material transparentMaterial;
+
     void LoadCSV()
     {
         //CSVファイルを読み込む
@@ -67,20 +69,10 @@ public class GameManagerScript : MonoBehaviour
                     Renderer rend = obj.GetComponent<Renderer>();
                     if (rend != null)
                     {
-                        Material mat = rend.material; // インスタンスを取得
-                        Color color = mat.color;
-                        color.a = 0f; 
-                        mat.color = color;
+                        rend.material = transparentMaterial;
 
-                        // マテリアルのレンダリングモードを透明対応に変更
-                        mat.SetFloat("_Mode", 3); // 3 = Transparent
-                        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                        mat.SetInt("_ZWrite", 0);
-                        mat.DisableKeyword("_ALPHATEST_ON");
-                        mat.EnableKeyword("_ALPHABLEND_ON");
-                        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                        mat.renderQueue = 3000;
+                        // Rendererをオフにして見えなくする
+                        rend.enabled = false;
                     }
                 }
                 else if (map[y, x] == 3)
@@ -112,6 +104,6 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+   
     }
 }

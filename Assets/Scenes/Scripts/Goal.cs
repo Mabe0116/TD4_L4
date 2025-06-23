@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Goal : MonoBehaviour
@@ -10,6 +11,8 @@ public class Goal : MonoBehaviour
     public GameObject clearUI;
     private static GameObject spawnedClearUI;
     private static bool isGameCleared = false;
+
+    public static bool IsGameCleared => isGameCleared;
 
     private static bool isUpPlayerInGoal = false;
     private static bool isBottomPlayerInGoal = false;
@@ -24,7 +27,7 @@ public class Goal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR    
+   
         // 時間が止まっていて、ゲームがクリア済み、かつ Space キーを押したら再開
         if (isGameCleared && Time.timeScale == 0f && Input.GetKeyDown(KeyCode.Space))
         {
@@ -46,7 +49,6 @@ public class Goal : MonoBehaviour
             }
 
         }
-#endif
     }
 
     void OnTriggerEnter(Collider other)
