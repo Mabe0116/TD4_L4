@@ -7,6 +7,7 @@ public class Map2 : MonoBehaviour
 {
     public GameObject block;
     public GameObject spike;
+    public GameObject goalBlock;
 
     //private List<Transform> moveBlocks = new List<Transform>();
 
@@ -124,7 +125,20 @@ public class Map2 : MonoBehaviour
                 {
                     GameObject obj = Instantiate(spike, position, Quaternion.identity);
                     obj.tag = "Spike";
+
+                    // 正しくCSV上で「6が並んでる行」に対応させる
+                    if (y == 8) // ← CSVの上から7行目（0-indexedで6）
+                    {
+                        // Z軸方向に180度回転（上下反転）
+                        obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                    }
+
                     Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                }
+                if (map2[y, x] == 7)
+                {
+                    //ゴール
+                    Instantiate(goalBlock, position, Quaternion.identity);
                 }
             }
         }

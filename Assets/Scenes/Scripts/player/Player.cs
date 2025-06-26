@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared && sceneName == "Map2")
         {
-            float y = gravityScale < 0 ? -2f : 0.0f;
+            float y = gravityScale < 0 ? -5f : 1.0f;
             transform.position = new Vector3(1.0f, y, transform.position.z);
             rb.velocity = Vector3.zero;
         }
