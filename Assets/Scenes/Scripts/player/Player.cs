@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public float gravityScale = 1.0f;
     private bool isBlock = true;
 
+    private Animator animator;
+
     void Start()
     {
         if (rb == null)
@@ -18,6 +20,8 @@ public class Player : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         }
         rb.useGravity = false;
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,6 +41,8 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector3(v.x, v.y, 0);
 
+
+
         // Rキーを押したときの位置リセット処理
         if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared && sceneName == "Map1")
         {
@@ -51,27 +57,57 @@ public class Player : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
 
+        //現在の角度の取得
+        Vector3 currentEulerAngles = transform.rotation.eulerAngles;
+        float targetYRotation = currentEulerAngles.y;
+
         // 横移動
         if (Input.GetKey(KeyCode.D))
         {
             v.x = moveSpeed;
+
+            targetYRotation = 110;
+            animator.SetBool("Walk", true);
+            animator.SetBool("Idle", false);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             v.x = -moveSpeed;
+
+            targetYRotation = 220;
+            animator.SetBool("Walk", true);
+            animator.SetBool("Idle", false);
         }
         else
         {
+            animator.SetBool("Walk", false);
+            animator.SetBool("Idle", true);
             v.x = 0;
         }
 
+        //y座標のみ変更
+        transform.rotation = Quaternion.Euler(currentEulerAngles.x, targetYRotation, currentEulerAngles.z);
+
+
         if (isBlock)
         {
+            if (animator != null)
+            {
+                animator.SetBool("Jump", false); // 地面にいるので、ジャンプアニメーションを停止
+            }
+
             Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //v.y = moveJump;
                 v.y = moveJump * Mathf.Sign(gravityScale);
+
+                if (animator != null)
+                {
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Jump", true);
+                }
             }
         }
         else
