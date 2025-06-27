@@ -46,6 +46,11 @@ public class Goal : MonoBehaviour
             {
                 SceneManager.LoadScene("Map2");
             }
+            if ((Input.GetKeyDown(KeyCode.Space) || isGameCleared) &&
+            SceneManager.GetActiveScene().name == "Map2")
+            {
+                SceneManager.LoadScene("Map3");
+            }
 
         }
     }
