@@ -94,6 +94,51 @@ public class Map4 : MonoBehaviour
                     obj.tag = "MoveBlock";
                     obj.transform.localScale = new Vector3(4f, 1f, 1f);
 
+                    // 動くブロックの動作制御スクリプトをアタッチ
+                    if (obj.GetComponent<MovingBlockController>() == null)
+                    {
+                        obj.AddComponent<MovingBlockController>();
+                    }
+
+                    // Rigidbody を追加（必要なら）
+                    if (obj.GetComponent<Rigidbody>() == null)
+                    {
+                        Rigidbody rb = obj.AddComponent<Rigidbody>();
+                        rb.isKinematic = true;     // 自分では物理的に動かない（Transformで動く場合はtrue）
+                        rb.useGravity = false;     // 重力もオフ（動かしたい方向にだけ動かす）
+                    }
+
+                    // コライダーをトリガーにする（なければ追加）
+                    Collider col = obj.GetComponent<Collider>();
+                    if (col == null)
+                    {
+                        col = obj.AddComponent<BoxCollider>();
+                    }
+                    col.isTrigger = false;
+
+                    // ★ここにセンサーを追加
+                    GameObject sensor = new GameObject("PlayerSensor");
+                    sensor.transform.parent = obj.transform;
+                    sensor.transform.localPosition = new Vector3(0f, 0.6f, 0f); // ブロックの上に配置
+
+                    BoxCollider sensorCollider = sensor.AddComponent<BoxCollider>();
+                    sensorCollider.isTrigger = true;
+                    sensorCollider.size = new Vector3(4f, 0.2f, 1f);  // 平べったく、上に広げる
+
+                    sensor.AddComponent<MovingBlockSensor>();  // ← センサー処理スクリプト
+
+                    // ↓ 下のプレイヤー用センサー（重力が逆向きな場合用）
+                    GameObject sensorBottom = new GameObject("PlayerSensorBottom");
+                    sensorBottom.transform.parent = obj.transform;
+                    sensorBottom.transform.localPosition = new Vector3(0f, -0.6f, 0f); // ブロックの下に配置
+
+                    BoxCollider bottomCol = sensorBottom.AddComponent<BoxCollider>();
+                    bottomCol.isTrigger = true;
+                    bottomCol.size = new Vector3(4f, 0.2f, 1f);  // 平べったく、下に広げる
+
+                    sensorBottom.AddComponent<MovingBlockSensor>();
+
+
                     float amplitude = (y == 12 || y == 6) ? 6.0f : 2.0f; // ← y==12だけ振れ幅大きく
                     moveBlocks.Add(new MovingBlock(obj.transform, amplitude));
 
