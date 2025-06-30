@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("Jump", false); // 地面にいるので、ジャンプアニメーションを停止
+                animator.SetBool("fall", false);
             }
 
             Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
@@ -113,6 +114,11 @@ public class Player : MonoBehaviour
         else
         {
             Debug.DrawRay(rayPosition, rayDirection * distance, Color.yellow);
+
+            if (animator != null)
+            {
+                animator.SetBool("fall", true);
+            }
         }
 
         rb.velocity = new Vector3(v.x, v.y, 0);
