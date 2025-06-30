@@ -4,7 +4,7 @@ public class MovingBlockSensor : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
         {
             other.transform.SetParent(transform.parent);
         }
@@ -12,7 +12,7 @@ public class MovingBlockSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
         {
             other.transform.SetParent(null);
         }

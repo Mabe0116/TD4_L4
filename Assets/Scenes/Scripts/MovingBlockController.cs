@@ -4,7 +4,7 @@ public class MovingBlockController : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
         {
             // プレイヤーの親をこのブロックに設定
             other.transform.SetParent(transform);
@@ -13,7 +13,7 @@ public class MovingBlockController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
         {
             // プレイヤーの親子関係を解除
             other.transform.SetParent(null);
