@@ -56,6 +56,12 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(1.0f, y, transform.position.z);
             rb.velocity = Vector3.zero;
         }
+        if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared && sceneName == "Map4")
+        {
+            float y = gravityScale < 0 ? -7f : -1.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
+            rb.velocity = Vector3.zero;
+        }
 
         // ‰¡ˆÚ“®
         if (Input.GetKey(KeyCode.D))

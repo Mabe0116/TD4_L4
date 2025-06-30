@@ -7,6 +7,7 @@ public class Map4 : MonoBehaviour
 {
     public GameObject block;
     public GameObject goalBlock;
+    public GameObject spike;
 
     //private List<Transform> moveBlocks = new List<Transform>();
 
@@ -21,11 +22,13 @@ public class Map4 : MonoBehaviour
     {
         public Transform transform;
         public Vector3 startPos;
+        public float amplitude;
 
-        public MovingBlock(Transform t)
+        public MovingBlock(Transform t, float amp)
         {
             transform = t;
             startPos = t.position;
+            amplitude = amp;
         }
     }
 
@@ -87,12 +90,16 @@ public class Map4 : MonoBehaviour
                 }
                 if (map2[y, x] == 4)
                 {
-                    if (map2[y, x] == 4)
+                    GameObject obj = Instantiate(block, position, Quaternion.identity);
+                    obj.tag = "MoveBlock";
+                    obj.transform.localScale = new Vector3(4f, 1f, 1f);
+
+                    float amplitude = (y == 12 || y == 6) ? 6.0f : 2.0f; // Å© y==12ÇæÇØêUÇÍïùëÂÇ´Ç≠
+                    moveBlocks.Add(new MovingBlock(obj.transform, amplitude));
+
+                    if (y == 11 || y == 6)
                     {
-                        GameObject obj = Instantiate(block, position, Quaternion.identity);
-                        obj.tag = "MoveBlock";
-                        obj.transform.localScale = new Vector3(3f, 1f, 1f);
-                        moveBlocks.Add(new MovingBlock(obj.transform));
+                        SetObjectTransparent(obj);
                     }
 
                 }
@@ -124,19 +131,53 @@ public class Map4 : MonoBehaviour
                     //ÉSÅ[Éã
                     Instantiate(goalBlock, position, Quaternion.identity);
                 }
+                if (map2[y, x] == 7)
+                {
+                    GameObject obj = Instantiate(spike, position, Quaternion.identity);
+                    obj.tag = "Spike";
+
+                    if (y == 10 || y == 12 || y == 13) 
+                    {
+                        // Zé≤ï˚å¸Ç…180ìxâÒì]Åiè„â∫îΩì]Åj
+                        obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                    }
+
+                    Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                }
             }
         }
     }
 
     // Update is called once per frame
     void Update()
-    {
-        float offset = Mathf.Sin(Time.time) * 1.0f;
-
+    { 
         foreach (MovingBlock move in moveBlocks)
         {
             Vector3 pos = move.startPos;
+            float speedFactor = 0.5f;
+            float offset = Mathf.Sin(Time.time * speedFactor) * move.amplitude; // Å© ÇªÇÍÇºÇÍÇÃêUÇÍïùÇégóp
             move.transform.position = new Vector3(pos.x + offset, pos.y, pos.z);
+        }
+    }
+
+    void SetObjectTransparent(GameObject obj)
+    {
+        Renderer rend = obj.GetComponent<Renderer>();
+        if (rend != null)
+        {
+            Material mat = rend.material;
+            Color color = mat.color;
+            color.a = 0f;
+            mat.color = color;
+
+            mat.SetFloat("_Mode", 3);
+            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            mat.SetInt("_ZWrite", 0);
+            mat.DisableKeyword("_ALPHATEST_ON");
+            mat.EnableKeyword("_ALPHABLEND_ON");
+            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            mat.renderQueue = 3000;
         }
     }
 
