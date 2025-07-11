@@ -1,22 +1,62 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingBlockController : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private Vector3 previousPosition;
+    private List<GameObject> ridingPlayers = new List<GameObject>();
+
+    public float amplitude = 2.0f;
+    public float speedFactor = 0.5f;
+    private Vector3 startPos;
+
+    void Start()
     {
-        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
+        startPos = transform.position;
+        previousPosition = startPos;
+    }
+
+    void Update()
+    {
+        float offset = Mathf.Sin(Time.time * speedFactor) * amplitude;
+        Vector3 newPosition = new Vector3(startPos.x + offset, startPos.y, startPos.z);
+        Vector3 delta = newPosition - transform.position;
+
+        transform.position = newPosition;
+
+        foreach (GameObject player in ridingPlayers)
         {
-            // プレイヤーの親をこのブロックに設定
-            other.transform.SetParent(transform);
+            if (player != null)
+            {
+                // プレイヤーの Rigidbody がある場合は MovePosition の方が自然な動きになる
+                Rigidbody rb = player.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.MovePosition(rb.position + delta);
+                }
+                else
+                {
+                    player.transform.position += delta;
+                }
+            }
+        }
+
+        previousPosition = transform.position;
+    }
+
+    public void AddPlayer(GameObject player)
+    {
+        if (!ridingPlayers.Contains(player))
+        {
+            ridingPlayers.Add(player);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void RemovePlayer(GameObject player)
     {
-        if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
+        if (ridingPlayers.Contains(player))
         {
-            // プレイヤーの親子関係を解除
-            other.transform.SetParent(null);
+            ridingPlayers.Remove(player);
         }
     }
 }
