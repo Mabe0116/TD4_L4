@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
 
     private Animator animator;
     private ParticleSystem dustParticle;
-    
+
+
     void Start()
     {
         if (rb == null)
@@ -24,8 +25,7 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
         dustParticle = GetComponent<ParticleSystem>();
-      //  dustParticle.Stop();    //パーティクルの生成を止める
-
+       
     }
 
     void Update()
@@ -86,6 +86,8 @@ public class Player : MonoBehaviour
             targetYRotation = 110;
             animator.SetBool("Walk", true);
             animator.SetBool("Idle", false);
+
+
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -94,6 +96,7 @@ public class Player : MonoBehaviour
             targetYRotation = 220;
             animator.SetBool("Walk", true);
             animator.SetBool("Idle", false);
+
         }
         else
         {
