@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
     private bool isBlock = true;
 
     private Animator animator;
-
+    private ParticleSystem dustParticle;
+    
     void Start()
     {
         if (rb == null)
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
         rb.useGravity = false;
 
         animator = GetComponent<Animator>();
+        dustParticle = GetComponent<ParticleSystem>();
+      //  dustParticle.Stop();    //パーティクルの生成を止める
+
     }
 
     void Update()
@@ -73,6 +77,7 @@ public class Player : MonoBehaviour
         Vector3 currentEulerAngles = transform.rotation.eulerAngles;
         float targetYRotation = currentEulerAngles.y;
 
+
         // 横移動
         if (Input.GetKey(KeyCode.D))
         {
@@ -100,6 +105,7 @@ public class Player : MonoBehaviour
         //y座標のみ変更
         transform.rotation = Quaternion.Euler(currentEulerAngles.x, targetYRotation, currentEulerAngles.z);
 
+       
 
         if (isBlock)
         {
@@ -108,8 +114,7 @@ public class Player : MonoBehaviour
                 animator.SetBool("Jump", false); // 地面にいるので、ジャンプアニメーションを停止
                 animator.SetBool("fall", false);
             }
-
-            Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
+                Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //v.y = moveJump;
@@ -117,6 +122,8 @@ public class Player : MonoBehaviour
 
                 if (animator != null)
                 {
+                    animator.Play("Jump", 0, 0f);
+
                     animator.SetBool("Idle", false);
                     animator.SetBool("Walk", false);
                     animator.SetBool("Jump", true);
@@ -132,6 +139,24 @@ public class Player : MonoBehaviour
                 animator.SetBool("fall", true);
             }
         }
+
+        //足の軌跡のパーティクル制御
+        var emission = dustParticle.emission;
+        if (isBlock && animator.GetBool("Walk")) 
+        {
+            if (!emission.enabled)
+            {
+                emission.enabled = true; // パーティクル実行
+            }
+        }
+        else 
+        {
+            if (emission.enabled)
+            {
+                emission.enabled = false; // パーティクルを止める
+            }
+        }
+
 
         rb.velocity = new Vector3(v.x, v.y, 0);
     }
