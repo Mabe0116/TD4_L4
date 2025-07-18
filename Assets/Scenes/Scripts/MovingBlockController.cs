@@ -3,23 +3,28 @@ using UnityEngine;
 
 public class MovingBlockController : MonoBehaviour
 {
-    private Vector3 previousPosition;
     private List<GameObject> ridingPlayers = new List<GameObject>();
-
     public float amplitude = 2.0f;
     public float speedFactor = 0.5f;
+
     private Vector3 startPos;
+    private float startTime;
+
+    void Awake()
+    {
+        startPos = transform.position;
+    }
 
     void Start()
     {
-        startPos = transform.position;
-        previousPosition = startPos;
+        startTime = Time.timeSinceLevelLoad;
     }
 
     void Update()
     {
-        float offset = Mathf.Sin(Time.time * speedFactor) * amplitude;
-        Vector3 newPosition = new Vector3(startPos.x + offset, startPos.y, startPos.z);
+        float elapsed = Time.timeSinceLevelLoad - startTime;
+        float offset = Mathf.Sin(elapsed * speedFactor) * amplitude;
+        Vector3 newPosition = startPos + new Vector3(offset, 0, 0);
         Vector3 delta = newPosition - transform.position;
 
         transform.position = newPosition;
@@ -28,7 +33,6 @@ public class MovingBlockController : MonoBehaviour
         {
             if (player != null)
             {
-                // プレイヤーの Rigidbody がある場合は MovePosition の方が自然な動きになる
                 Rigidbody rb = player.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
@@ -40,8 +44,6 @@ public class MovingBlockController : MonoBehaviour
                 }
             }
         }
-
-        previousPosition = transform.position;
     }
 
     public void AddPlayer(GameObject player)
@@ -58,5 +60,11 @@ public class MovingBlockController : MonoBehaviour
         {
             ridingPlayers.Remove(player);
         }
+    }
+
+    public void ResetStartPosition()
+    {
+        startPos = transform.position;
+        startTime = Time.timeSinceLevelLoad;
     }
 }

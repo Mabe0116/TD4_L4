@@ -142,12 +142,27 @@ public class Player : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         float y = 0;
 
-        if (sceneName == "Map1") y = gravityScale < 0 ? 0.4f : 2.4f;
-        else if (sceneName == "Map2") y = gravityScale < 0 ? -5f : 1.0f;
-        else if (sceneName == "Map3") y = gravityScale < 0 ? -6f : -4.0f;
-        else if (sceneName == "Map4") y = gravityScale < 0 ? -7f : -1.0f;
+        if (sceneName == "Map1")
+        {
+            y = gravityScale < 0 ? 0.4f : 2.4f;
+            transform.position = new Vector3(3.0f, y, transform.position.z); // ← X座標を右に（例：3.0f）
+        }
+        else if (sceneName == "Map2")
+        {
+            y = gravityScale < 0 ? -5f : 1.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
+        }
+        else if (sceneName == "Map3")
+        {
+            y = gravityScale < 0 ? -6f : -4.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
+        }
+        else if (sceneName == "Map4")
+        {
+            y = gravityScale < 0 ? -7f : -1.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
+        }
 
-        transform.position = new Vector3(1.0f, y, transform.position.z);
         rb.velocity = Vector3.zero;
     }
 }

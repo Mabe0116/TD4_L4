@@ -135,7 +135,7 @@ public class Map4 : MonoBehaviour
 
                     BoxCollider bottomCol = sensorBottom.AddComponent<BoxCollider>();
                     bottomCol.isTrigger = true;
-                    bottomCol.size = new Vector3(4f, 0.2f, 1f);  // ïΩÇ◊Ç¡ÇΩÇ≠ÅAâ∫Ç…çLÇ∞ÇÈ
+                    bottomCol.size = new Vector3(4f, 0.2f, 1f);
 
                     sensorBottom.AddComponent<MovingBlockSensor>();
 
