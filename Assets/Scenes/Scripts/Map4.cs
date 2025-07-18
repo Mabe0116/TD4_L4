@@ -138,9 +138,14 @@ public class Map4 : MonoBehaviour
 
                     sensorBottom.AddComponent<MovingBlockSensor>();
 
-
                     float amplitude = (y == 12 || y == 6) ? 6.0f : 2.0f; // Å© y==12ÇæÇØêUÇÍïùëÂÇ´Ç≠
                     moveBlocks.Add(new MovingBlock(obj.transform, amplitude));
+
+                    MovingBlockController controller = obj.GetComponent<MovingBlockController>();
+                    if (controller != null)
+                    {
+                        controller.amplitude = amplitude;
+                    }
 
                     if (y == 11 || y == 6)
                     {
@@ -181,7 +186,7 @@ public class Map4 : MonoBehaviour
                     GameObject obj = Instantiate(spike, position, Quaternion.identity);
                     obj.tag = "Spike";
 
-                    if (y == 10 || y == 12 || y == 13) 
+                    if (y == 10 || y == 12 || y == 13)
                     {
                         // Zé≤ï˚å¸Ç…180ìxâÒì]Åiè„â∫îΩì]Åj
                         obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
@@ -195,7 +200,7 @@ public class Map4 : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         foreach (MovingBlock move in moveBlocks)
         {
             Vector3 pos = move.startPos;
