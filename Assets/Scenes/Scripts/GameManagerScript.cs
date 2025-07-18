@@ -8,7 +8,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public GameObject block;
     public GameObject ghostBlock;
-    public GameObject goalBlock;
+    public GameObject goalFlag;
     public GameObject spike;
 
     public TextAsset csvFile;
@@ -78,7 +78,16 @@ public class GameManagerScript : MonoBehaviour
                 else if (map[y, x] == 3)
                 {
                     //ゴール
-                    Instantiate(goalBlock, position, Quaternion.identity);
+                    GameObject obj = Instantiate(goalFlag, position, Quaternion.identity);
+                   // obj.tag = "Goal";
+
+                    if (y == 7) // ← CSVの上から7行目（0-indexedで6）
+                    {
+                        obj.transform.rotation = Quaternion.Euler(0f, 180f, 180f);
+                    }
+
+
+                   // Instantiate(goalFlag, position, Quaternion.identity);
                 }
                 if (map[y, x] == 4)
                 {
