@@ -12,6 +12,7 @@ TagManager:
   - MoveBlock
   - MoveBlock2
   - Spike
+  - Goal
   layers:
   - Default
   - TransparentFX
