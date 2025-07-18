@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike")
         {
-            StartCoroutine(RespawnBothPlayers(2f));
+            StartCoroutine(RespawnBothPlayers(1f));
         }
     }
 
