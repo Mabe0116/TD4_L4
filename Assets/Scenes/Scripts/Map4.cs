@@ -6,7 +6,7 @@ using UnityEngine;
 public class Map4 : MonoBehaviour
 {
     public GameObject block;
-    public GameObject goalBlock;
+    public GameObject goalFlag;
     public GameObject spike;
 
     //private List<Transform> moveBlocks = new List<Transform>();
@@ -174,7 +174,13 @@ public class Map4 : MonoBehaviour
                 if (map2[y, x] == 6)
                 {
                     //ゴール
-                    Instantiate(goalBlock, position, Quaternion.identity);
+                    GameObject obj = Instantiate(goalFlag, position, Quaternion.identity);
+                    obj.tag = "Goal";
+
+                    if (y == 13) // ← CSVの上から7行目（0-indexedで6）
+                    {
+                        obj.transform.rotation = Quaternion.Euler(0f, 180f, 180f);
+                    }
                 }
                 if (map2[y, x] == 7)
                 {

@@ -141,9 +141,9 @@ public class Map2 : MonoBehaviour
                     GameObject obj = Instantiate(goalFlag, position, Quaternion.identity);
                     obj.tag = "Goal";
 
-                    if (y == 8) // ← CSVの上から7行目（0-indexedで6）
+                    if (y == 10) // ← CSVの上から7行目（0-indexedで6）
                     {
-                        obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                        obj.transform.rotation = Quaternion.Euler(0f, 180f, 180f);
                     }
                 }
             }
