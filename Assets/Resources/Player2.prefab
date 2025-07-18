@@ -87,6 +87,7 @@ MonoBehaviour:
   moveSpeed: 5
   moveJump: 5
   gravityScale: -1
+  bombParticle: {fileID: 5741822110577913772, guid: 314e4e5f8a6d8ae4fb7bcb5fbc3fda22, type: 3}
 --- !u!54 &6073396941452574618
 Rigidbody:
   m_ObjectHideFlags: 0
