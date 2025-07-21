@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float moveJump = 5.0f;
     public float gravityScale = 1.0f;
+    public float jumpForce = 5.0f;
     private bool isBlock = true;
-
+    
     private Animator animator;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
         rb.useGravity = false;
 
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -120,6 +123,11 @@ public class Player : MonoBehaviour
                     animator.SetBool("Idle", false);
                     animator.SetBool("Walk", false);
                     animator.SetBool("Jump", true);
+                }
+
+                if (audioSource != null && audioSource.clip != null)
+                {
+                    audioSource.Play();
                 }
             }
         }
