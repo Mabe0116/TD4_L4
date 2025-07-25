@@ -56,16 +56,16 @@ public class Map4 : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+
         LoadCSV();
 
 
         Vector3 position = Vector3.zero;
 
         MoveBlock = transform.position;
-        //MoveBlock2 = transform.position;
+
 
         //マップチップでの描画
         for (int y = 0; y < map2.GetLength(0); y++)
@@ -147,6 +147,7 @@ public class Map4 : MonoBehaviour
                         SetObjectTransparent(obj);
                     }
 
+                    Debug.Log("Instantiated moving block at " + position + ". Added to moveBlocks. Current count: " + moveBlocks.Count + " in scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 }
 
                 if (map2[y, x] == 5)
@@ -187,26 +188,45 @@ public class Map4 : MonoBehaviour
                     GameObject obj = Instantiate(spike, position, Quaternion.identity);
                     obj.tag = "Spike";
 
-                    if (y == 10 || y == 12 || y == 13) 
+                    if (y == 10 || y == 12 || y == 13)
                     {
                         // Z軸方向に180度回転（上下反転）
                         obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
                     }
 
-                    Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                   // Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
                 }
             }
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+       
+    }
+
     // Update is called once per frame
     void Update()
-    { 
-        foreach (MovingBlock move in moveBlocks)
+    {
+        Debug.Log("Map4 Update running. moveBlocks count: " + moveBlocks.Count + " Time.time: " + Time.time + " in scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+        // リストを逆順に走査し、要素を安全に削除できるようにする
+        for (int i = moveBlocks.Count - 1; i >= 0; i--) // ここを修正
         {
+            MovingBlock move = moveBlocks[i];
+
+            // UnityのObjectのnullチェック (破棄されたオブジェクトも検出できる)
+            if (move.transform == null) // オブジェクトが破棄されたかチェック
+            {
+                Debug.LogWarning("Map4: Found a destroyed moving block's transform in list. Removing it.");
+                moveBlocks.RemoveAt(i); // 破棄された要素をリストから削除
+                continue; // 次の要素へ
+            }
+
             Vector3 pos = move.startPos;
             float speedFactor = 0.5f;
-            float offset = Mathf.Sin(Time.time * speedFactor) * move.amplitude; // ← それぞれの振れ幅を使用
+            float offset = Mathf.Sin(Time.time * speedFactor) * move.amplitude;
             move.transform.position = new Vector3(pos.x + offset, pos.y, pos.z);
         }
     }

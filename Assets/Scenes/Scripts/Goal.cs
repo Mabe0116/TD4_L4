@@ -20,7 +20,15 @@ public class Goal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isGameCleared = false;
+        isUpPlayerInGoal = false;
+        isBottomPlayerInGoal = false;
 
+        if(spawnedClearUI!=null)
+        {
+            Destroy(spawnedClearUI);
+            spawnedClearUI = null;
+        }
     }
 
     // Update is called once per frame
@@ -42,19 +50,31 @@ public class Goal : MonoBehaviour
             isBottomPlayerInGoal = false;
 
 
-            if (Input.GetKeyDown(KeyCode.Space) || isGameCleared == true)
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            string nextSceneName = "";
+
+            if (currentSceneName == "Map1")
             {
-                SceneManager.LoadScene("Map2");
+                nextSceneName = "Map2";
             }
-            if ((Input.GetKeyDown(KeyCode.Space) || isGameCleared) &&
-            SceneManager.GetActiveScene().name == "Map2")
+            else if (currentSceneName == "Map2")
             {
-                SceneManager.LoadScene("Map3");
+                nextSceneName = "Map3";
             }
-            if ((Input.GetKeyDown(KeyCode.Space) || isGameCleared) &&
-            SceneManager.GetActiveScene().name == "Map3")
+            else if (currentSceneName == "Map3")
             {
-                SceneManager.LoadScene("Map4");
+                nextSceneName = "Map4";
+            }
+            else if (currentSceneName == "Map4")
+            {
+                // 例えば、Map4が最終ステージならタイトルに戻るなど
+                nextSceneName = "Map1"; // 例: 最後のシーンからタイトルへ
+                Debug.Log("Game Cleared! Returning to Title Scene.");
+            }
+
+            if (!string.IsNullOrEmpty(nextSceneName))
+            {
+                ChangeScene.Instance.LoadScene(nextSceneName);
             }
 
         }
