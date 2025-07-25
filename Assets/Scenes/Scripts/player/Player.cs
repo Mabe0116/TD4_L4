@@ -206,6 +206,11 @@ public class Player : MonoBehaviour
             y = gravityScale < 0 ? -7f : -1.0f;
             transform.position = new Vector3(1.0f, y, transform.position.z);
         }
+        else if (sceneName == "Map5")
+        {
+            y = gravityScale < 0 ? -7f : -1.0f;
+            transform.position = new Vector3(1.0f, y, transform.position.z);
+        }
 
         rb.velocity = Vector3.zero;
     }
