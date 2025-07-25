@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         // Rキーでリセット
         if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared)
         {
-            RespawnToStart();
+            StartCoroutine(RespawnAfterDelay(0.5f)); // ← コルーチンを開始
         }
 
         // 横移動
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike")
         {
-            StartCoroutine(RespawnBothPlayers(1f));
+            StartCoroutine(RespawnBothPlayers(0.5f));
         }
     }
 
@@ -183,6 +183,9 @@ public class Player : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         float y = 0;
 
+        // 現在位置で爆発パーティクルを出す
+        Instantiate(bombParticle, transform.position, Quaternion.identity);
+
         if (sceneName == "Map1")
         {
             y = gravityScale < 0 ? 0.4f : 2.4f;
@@ -206,4 +209,18 @@ public class Player : MonoBehaviour
 
         rb.velocity = Vector3.zero;
     }
+
+    private IEnumerator RespawnAfterDelay(float delay)
+    {
+        canControl = false;
+        rb.velocity = Vector3.zero;
+
+        Instantiate(bombParticle, transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(delay);
+
+        RespawnToStart();
+        canControl = true;
+    }
+
 }
