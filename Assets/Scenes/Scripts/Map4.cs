@@ -57,16 +57,16 @@ public class Map4 : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+
         LoadCSV();
 
 
         Vector3 position = Vector3.zero;
 
         MoveBlock = transform.position;
-        //MoveBlock2 = transform.position;
+
 
         //マップチップでの描画
         for (int y = 0; y < map2.GetLength(0); y++)
@@ -153,6 +153,7 @@ public class Map4 : MonoBehaviour
                         SetObjectTransparent(obj);
                     }
 
+                    Debug.Log("Instantiated moving block at " + position + ". Added to moveBlocks. Current count: " + moveBlocks.Count + " in scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 }
 
                 if (map2[y, x] == 5)
@@ -199,10 +200,16 @@ public class Map4 : MonoBehaviour
                         obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
                     }
 
-                    Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
+                   // Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
                 }
             }
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+       
     }
 
     // Update is called once per frame
@@ -212,7 +219,7 @@ public class Map4 : MonoBehaviour
         {
             Vector3 pos = move.startPos;
             float speedFactor = 0.5f;
-            float offset = Mathf.Sin(Time.time * speedFactor) * move.amplitude; // ← それぞれの振れ幅を使用
+            float offset = Mathf.Sin(Time.time * speedFactor) * move.amplitude;
             move.transform.position = new Vector3(pos.x + offset, pos.y, pos.z);
         }
     }

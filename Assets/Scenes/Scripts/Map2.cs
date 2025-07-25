@@ -42,7 +42,7 @@ public class Map2 : MonoBehaviour
 
         map2 = new int[height, width];
 
-        
+
         for (int y = 0; y < height; y++)
         {
             string[] lineData = lines[y].Trim().Split(',');
@@ -54,8 +54,7 @@ public class Map2 : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         LoadCSV();
 
@@ -148,11 +147,20 @@ public class Map2 : MonoBehaviour
                 }
             }
         }
-}
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Map4 Update running. moveBlocks count: " + moveBlocks.Count + " Time.time: " + Time.time + " in scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+
         float offset = Mathf.Sin(Time.time) * 1.0f;
 
         foreach (MovingBlock move in moveBlocks)
