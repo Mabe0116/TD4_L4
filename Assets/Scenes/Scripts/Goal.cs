@@ -16,15 +16,14 @@ public class Goal : MonoBehaviour
     private static bool isUpPlayerInGoal = false;
     private static bool isBottomPlayerInGoal = false;
 
-
     // Start is called before the first frame update
     void Start()
     {
         isGameCleared = false;
         isUpPlayerInGoal = false;
         isBottomPlayerInGoal = false;
-
-        if(spawnedClearUI!=null)
+        
+        if (spawnedClearUI!=null)
         {
             Destroy(spawnedClearUI);
             spawnedClearUI = null;
@@ -45,7 +44,7 @@ public class Goal : MonoBehaviour
                 Destroy(spawnedClearUI);
                 spawnedClearUI = null;
             }
-            isGameCleared = false;
+           // isGameCleared = false;
             isUpPlayerInGoal = false;
             isBottomPlayerInGoal = false;
 
@@ -74,6 +73,7 @@ public class Goal : MonoBehaviour
 
             if (!string.IsNullOrEmpty(nextSceneName))
             {
+               
                 ChangeScene.Instance.LoadScene(nextSceneName);
             }
 
@@ -82,6 +82,11 @@ public class Goal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isGameCleared)
+        {
+            return;
+        }
+
         if (other.CompareTag("UpPlayer"))
         {
             isUpPlayerInGoal = true;
@@ -107,6 +112,12 @@ public class Goal : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        // 既にゲームがクリア状態であれば、それ以上の処理はしない
+        if (isGameCleared)
+        {
+            return;
+        }
+
         if (other.CompareTag("UpPlayer"))
         {
             isUpPlayerInGoal = false;
