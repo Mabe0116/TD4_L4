@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8015423431678723760, guid: d085d431518214141be3e398f625f703, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8015423431678723762, guid: d085d431518214141be3e398f625f703, type: 3}
       propertyPath: m_RootOrder
@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 1059882182}
   - component: {fileID: 1059882181}
   - component: {fileID: 1059882184}
+  - component: {fileID: 1059882185}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -538,6 +539,19 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1059882185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059882180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b50989753c4afd4087c063b02894339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseUIPrefab: {fileID: 5189319794739127207, guid: 0494dd15837569a40a07d0ea4f7390f6, type: 3}
 --- !u!1 &1278295090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3252338259679507912, guid: d7b880fee20f4864997433d60d4f9b56, type: 3}
@@ -5816,6 +5830,14 @@ PrefabInstance:
     - target: {fileID: 3252338258189889121, guid: d7b880fee20f4864997433d60d4f9b56, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252338258189889121, guid: d7b880fee20f4864997433d60d4f9b56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252338258189889124, guid: d7b880fee20f4864997433d60d4f9b56, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 3252338258189889125, guid: d7b880fee20f4864997433d60d4f9b56, type: 3}
       propertyPath: m_Pivot.x
