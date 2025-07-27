@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 867151418}
   - component: {fileID: 867151417}
   - component: {fileID: 867151420}
+  - component: {fileID: 867151421}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -780,6 +781,21 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &867151421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867151416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b50989753c4afd4087c063b02894339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseUIPrefab: {fileID: 4083029378992416482, guid: 0494dd15837569a40a07d0ea4f7390f6, type: 3}
+  yesButton: {fileID: 0}
+  noButton: {fileID: 0}
 --- !u!1001 &949451096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1112,6 +1128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8620923329138660890, guid: 58d654e18781a7b47ab98fc042f5ffe8, type: 3}
       propertyPath: m_LocalPosition.z
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8620923329138660890, guid: 58d654e18781a7b47ab98fc042f5ffe8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1248,7 +1265,6 @@ MonoBehaviour:
   block: {fileID: 3634918870475206855, guid: 61b53f9bb50ffa24380a9d5ccefbc35d, type: 3}
   goalFlag: {fileID: 9100176392240071478, guid: 0f31cae72192e694dbaa58a1e2722dad, type: 3}
   spike: {fileID: 148665662}
-  MoveBlock: {x: 0, y: 0, z: 0}
   csvFile: {fileID: 4900000, guid: b568dabd67f599a4f9d4325fc3d88c02, type: 3}
 --- !u!4 &1995469126
 Transform:
