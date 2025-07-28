@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b50989753c4afd4087c063b02894339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseUIPrefab: {fileID: 4083029378992416482, guid: 0494dd15837569a40a07d0ea4f7390f6, type: 3}
+  pauseUIPrefab: {fileID: 4269816895564752022, guid: 0494dd15837569a40a07d0ea4f7390f6, type: 3}
   yesButton: {fileID: 0}
   noButton: {fileID: 0}
 --- !u!1 &1278295090 stripped
