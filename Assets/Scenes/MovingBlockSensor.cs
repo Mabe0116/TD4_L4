@@ -9,7 +9,7 @@ public class MovingBlockSensor : MonoBehaviour
     {
         lastPosition = transform.parent.position; // センサーの親（＝動くブロック）の初期位置
     }
-
+             
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("UpPlayer") || other.CompareTag("BottomPlayer"))
