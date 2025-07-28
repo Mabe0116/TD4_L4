@@ -31,9 +31,9 @@ public class Player : MonoBehaviour
         {
             if (animator != null)
             {
-                animator.Play("Idle", 0, 0f); // Idleステートの最初から再生
-                animator.SetBool("Idle", true);
-                animator.SetBool("Walk", false);
+                animator.Play("Walk", 0, 0f); // Idleステートの最初から再生
+                animator.SetBool("Walk", true);
+                animator.SetBool("Idle", false);
                 animator.SetBool("Jump", false);
                 animator.SetBool("fall", false);
                 // タイトルシーンではAnimatorを無効化することで、
