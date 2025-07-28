@@ -25,12 +25,37 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
         dustParticle = GetComponent<ParticleSystem>();
-       
+
+        // シーンがタイトルシーンであれば、初期化時にアニメーションをIdleに設定
+        if (SceneManager.GetActiveScene().name == "title")
+        {
+            if (animator != null)
+            {
+                animator.Play("Idle", 0, 0f); // Idleステートの最初から再生
+                animator.SetBool("Idle", true);
+                animator.SetBool("Walk", false);
+                animator.SetBool("Jump", false);
+                animator.SetBool("fall", false);
+                // タイトルシーンではAnimatorを無効化することで、
+                // 他のアニメーション遷移を防ぐ
+                animator.enabled = false;
+            }
+            // タイトルシーンではプレイヤーの物理演算も無効化する（必要であれば）
+            rb.isKinematic = true;
+            rb.velocity = Vector3.zero;
+        }
+
     }
 
     void Update()
     {
-        Vector3 v = rb.velocity;
+
+        if (SceneManager.GetActiveScene().name == "Title")
+        {
+            return;
+        }
+
+            Vector3 v = rb.velocity;
 
         Vector3 rayPosition = transform.position;
 
