@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Vector3 v = rb.velocity;
+        //Vector3 v = rb.velocity;
         Vector3 rayPosition = transform.position;
         string sceneName = SceneManager.GetActiveScene().name;
 
