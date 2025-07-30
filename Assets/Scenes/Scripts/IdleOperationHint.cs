@@ -25,7 +25,7 @@ public class IdleOperationHint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxis("Horizontal") != 0 | Input.GetKeyDown(KeyCode.Space))
         {
             lastInputTime = Time.time;
             if (isHintVisible)

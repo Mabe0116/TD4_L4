@@ -28,6 +28,7 @@ public class Goal : MonoBehaviour
             Destroy(spawnedClearUI);
             spawnedClearUI = null;
         }
+
     }
 
     // Update is called once per frame
@@ -51,6 +52,7 @@ public class Goal : MonoBehaviour
 
             string currentSceneName = SceneManager.GetActiveScene().name;
             string nextSceneName = "";
+
 
             if (currentSceneName == "Map1")
             {

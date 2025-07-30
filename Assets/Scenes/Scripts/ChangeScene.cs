@@ -1,19 +1,14 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // シーンロードのために必要
-using UnityEngine.UI; // CanvasGroupのために必要
-using System.Collections; // コルーチンのために必要
+using UnityEngine.SceneManagement; 
+using UnityEngine.UI; 
+using System.Collections; 
 
 public class ChangeScene : MonoBehaviour
 {
     // シングルトンパターンでどこからでもアクセスできるようにする
     public static ChangeScene Instance { get; private set; }
-
-    [Header("UI References")]
-    [Tooltip("シーンを覆い隠すためのCanvasGroupを持つUIパネル")]
     public CanvasGroup fadePanelCanvasGroup;
 
-    [Header("Transition Settings")]
-    [Tooltip("フェードイン/アウトにかける時間")]
     public float transitionDuration = 1.0f;
 
     private bool _isTransitioning = false; // シーン遷移中かどうかのフラグ
@@ -43,9 +38,6 @@ public class ChangeScene : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 指定されたシーンへの遷移を開始する
-    /// </summary>
     /// <param name="sceneName">遷移先のシーン名</param>
     public void LoadScene(string sceneName)
     {
@@ -55,15 +47,12 @@ public class ChangeScene : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// シーン遷移のコルーチン
-    /// </summary>
     /// <param name="sceneName">遷移先のシーン名</param>
     private IEnumerator TransitionScene(string sceneName)
     {
         _isTransitioning = true;
 
-        // フェードアウト（シーンが暗くなる）を開始
+        // フェードアウトを開始
         yield return StartCoroutine(Fade(fadePanelCanvasGroup, 0, 1, transitionDuration));
 
         // フェードアウトが完了したら次のシーンをロード
@@ -94,13 +83,6 @@ public class ChangeScene : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// CanvasGroupのAlpha値を徐々に変化させるコルーチン
-    /// </summary>
-    /// <param name="canvasGroup">対象のCanvasGroup</param>
-    /// <param name="startAlpha">開始時のAlpha値</param>
-    /// <param name="endAlpha">終了時のAlpha値</param>
-    /// <param name="duration">アニメーションにかける時間</param>
     private IEnumerator Fade(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float duration)
     {
         float timer = 0f;
