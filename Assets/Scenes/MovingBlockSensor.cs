@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class MovingBlockSensor : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class MovingBlockSensor : MonoBehaviour
 
     void Start()
     {
-        lastPosition = transform.parent.position; // ƒZƒ“ƒT[‚Ìei“®‚­ƒuƒƒbƒNj‚Ì‰ŠúˆÊ’u
+        lastPosition = transform.parent.position; // ã‚»ãƒ³ã‚µãƒ¼ã®è¦ªï¼ˆï¼å‹•ããƒ–ãƒ­ãƒƒã‚¯ï¼‰ã®åˆæœŸä½ç½®
     }
              
     void OnTriggerEnter(Collider other)
@@ -33,14 +33,14 @@ public class MovingBlockSensor : MonoBehaviour
     {
         if (playerOnTop != null)
         {
-            // ƒuƒƒbƒN‚ÌŒ»İ‚ÌˆÊ’u‚Æ‘O‚ÌˆÊ’u‚Ì·•ªiˆÚ“®—Êj‚ğŒvZ
+            // ãƒ–ãƒ­ãƒƒã‚¯ã®ç¾åœ¨ã®ä½ç½®ã¨å‰ã®ä½ç½®ã®å·®åˆ†ï¼ˆï¼ç§»å‹•é‡ï¼‰ã‚’è¨ˆç®—
             Vector3 blockMovement = transform.parent.position - lastPosition;
 
-            // ƒvƒŒƒCƒ„[‚É‚»‚ÌˆÚ“®—Ê‚ğ‰ÁZiˆê‚É“®‚©‚·j
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ãã®ç§»å‹•é‡ã‚’åŠ ç®—ï¼ˆï¼ä¸€ç·’ã«å‹•ã‹ã™ï¼‰
             playerOnTop.position += blockMovement;
         }
 
-        // –ˆƒtƒŒ[ƒ€‚ÌI—¹‚ÉAƒuƒƒbƒN‚ÌˆÊ’u‚ğXV
+        // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®çµ‚äº†æ™‚ã«ã€ãƒ–ãƒ­ãƒƒã‚¯ã®ä½ç½®ã‚’æ›´æ–°
         lastPosition = transform.parent.position;
     }
 }

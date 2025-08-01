@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,25 +7,23 @@ using UnityEngine.SceneManagement;
 public class TitleScript : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    public float speed = 5f; // “_–Å‘¬“xi¬‚³‚¢‚Ù‚Ç‚ä‚Á‚­‚èj
+    public float speed = 5f; // ç‚¹æ»…é€Ÿåº¦ï¼ˆå°ã•ã„ã»ã©ã‚†ã£ãã‚Šï¼‰
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // ¡‚ÌƒV[ƒ“‚ª "Title" ‚Ì‚Æ‚«‚¾‚¯ SPACE ‚ğ‹–‰Â
+        // ä»Šã®ã‚·ãƒ¼ãƒ³ãŒ "Title" ã®ã¨ãã ã‘ SPACE ã‚’è¨±å¯
         if (SceneManager.GetActiveScene().name == "Title" && Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("SPACE pressed on Title. Loading Map1...");
             SceneManager.LoadScene("Map1");
         }
 
-        //ƒeƒLƒXƒg‚Ì“_–Å
+        //ãƒ†ã‚­ã‚¹ãƒˆã®ç‚¹æ»…
         if (text != null)
         {
             float alpha = (Mathf.Sin(Time.time * speed) + 1f) / 2f;

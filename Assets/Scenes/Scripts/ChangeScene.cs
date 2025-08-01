@@ -1,44 +1,39 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement; 
 using UnityEngine.UI; 
 using System.Collections; 
 
 public class ChangeScene : MonoBehaviour
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚Å‚Ç‚±‚©‚ç‚Å‚àƒAƒNƒZƒX‚Å‚«‚é‚æ‚¤‚É‚·‚é
     public static ChangeScene Instance { get; private set; }
     public CanvasGroup fadePanelCanvasGroup;
 
     public float transitionDuration = 1.0f;
-
-    private bool _isTransitioning = false; // ƒV[ƒ“‘JˆÚ’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+    private bool _isTransitioning = false; // ã‚·ãƒ¼ãƒ³é·ç§»ä¸­ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 
     void Awake()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“: •¡”‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ƒV[ƒ“‚ªØ‚è‘Ö‚í‚Á‚Ä‚à‚±‚ÌGameObject‚Í”jŠü‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
-            Destroy(gameObject); // Šù‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ª‘¶İ‚·‚éê‡‚Í©•ª©g‚ğ”jŠü
+            Destroy(gameObject);
         }
     }
 
     void Start()
     {
-        // ƒQ[ƒ€ŠJni‚Ü‚½‚ÍÅ‰‚ÌƒV[ƒ“ƒ[ƒhj‚ÉƒtƒF[ƒhƒCƒ“‚·‚é
         if (fadePanelCanvasGroup != null)
         {
-            fadePanelCanvasGroup.alpha = 1; // Å‰‚ÍŠ®‘S‚É•s“§–¾
-            // ƒtƒF[ƒhƒCƒ“iƒV[ƒ“‚ªŒ©‚¦‚é‚æ‚¤‚É‚È‚éj‚ğŠJn
+            fadePanelCanvasGroup.alpha = 1; 
+            // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’é–‹å§‹
             StartCoroutine(Fade(fadePanelCanvasGroup, 1, 0, transitionDuration));
         }
     }
 
-    /// <param name="sceneName">‘JˆÚæ‚ÌƒV[ƒ“–¼</param>
     public void LoadScene(string sceneName)
     {
         if (!_isTransitioning)
@@ -47,19 +42,16 @@ public class ChangeScene : MonoBehaviour
         }
     }
 
-    /// <param name="sceneName">‘JˆÚæ‚ÌƒV[ƒ“–¼</param>
     private IEnumerator TransitionScene(string sceneName)
     {
         _isTransitioning = true;
 
-        // ƒtƒF[ƒhƒAƒEƒg‚ğŠJn
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹
         yield return StartCoroutine(Fade(fadePanelCanvasGroup, 0, 1, transitionDuration));
-
-        // ƒtƒF[ƒhƒAƒEƒg‚ªŠ®—¹‚µ‚½‚çŸ‚ÌƒV[ƒ“‚ğƒ[ƒh
+        //æ¬¡ã®ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰
         SceneManager.LoadScene(sceneName);
     }
 
-    // ƒV[ƒ“‚ªƒ[ƒh‚³‚ê‚½Œã‚É©“®“I‚ÉŒÄ‚Î‚ê‚éƒƒ\ƒbƒh
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -72,14 +64,13 @@ public class ChangeScene : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // V‚µ‚¢ƒV[ƒ“‚ªƒ[ƒh‚³‚ê‚½‚çƒtƒF[ƒhƒCƒ“‚·‚é
+        // æ–°ã—ã„ã‚·ãƒ¼ãƒ³ãŒãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸã‚‰ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã™ã‚‹
         if (fadePanelCanvasGroup != null)
         {
-            // ‚Ü‚¸•s“§–¾‚É‚µ‚Ä‚©‚çƒtƒF[ƒhƒCƒ“‚³‚¹‚é
             fadePanelCanvasGroup.alpha = 1;
             StartCoroutine(Fade(fadePanelCanvasGroup, 1, 0, transitionDuration));
         }
-        _isTransitioning = false; // ‘JˆÚƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+        _isTransitioning = false; 
     }
 
 
@@ -90,8 +81,8 @@ public class ChangeScene : MonoBehaviour
         {
             timer += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, timer / duration);
-            yield return null; // 1ƒtƒŒ[ƒ€‘Ò‚Â
+            yield return null; 
         }
-        canvasGroup.alpha = endAlpha; // ŠmÀ‚É–Ú•W‚ÌAlpha’l‚É‚·‚é
+        canvasGroup.alpha = endAlpha; 
     }
 }

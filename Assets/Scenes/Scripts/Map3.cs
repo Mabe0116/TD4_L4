@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -8,12 +8,7 @@ public class Map3 : MonoBehaviour
     public GameObject block;
     public GameObject goalFlag;
 
-    //private List<Transform> moveBlocks = new List<Transform>();
-
     private Vector3 MoveBlock;
-
-    //private Vector3 MoveBlock2;
-
     public TextAsset csvFile;
     int[,] map2;
 
@@ -34,7 +29,7 @@ public class Map3 : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+        //CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
@@ -61,9 +56,8 @@ public class Map3 : MonoBehaviour
         Vector3 position = Vector3.zero;
 
         MoveBlock = transform.position;
-        //MoveBlock2 = transform.position;
-
-        //ƒ}ƒbƒvƒ`ƒbƒv‚Å‚Ì•`‰æ
+ 
+        //ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã§ã®æç”»
         for (int y = 0; y < map2.GetLength(0); y++)
         {
             for (int x = 0; x < map2.GetLength(1); x++)
@@ -99,7 +93,7 @@ public class Map3 : MonoBehaviour
                 if (map2[y, x] == 5)
                 {
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
-                    // “§–¾“x‚ğİ’è
+                    // é€æ˜åº¦ã‚’è¨­å®š
                     Renderer rend = obj.GetComponent<Renderer>();
                     if (rend != null)
                     {
@@ -120,11 +114,11 @@ public class Map3 : MonoBehaviour
                 }
                 if (map2[y, x] == 6)
                 {
-                    //ƒS[ƒ‹
+                    //ã‚´ãƒ¼ãƒ«
                     GameObject obj = Instantiate(goalFlag, position, Quaternion.identity);
                     obj.tag = "Goal";
 
-                    if (y == 16) // © CSV‚Ìã‚©‚ç7s–Úi0-indexed‚Å6j
+                    if (y == 16) // â† CSVã®ä¸Šã‹ã‚‰7è¡Œç›®ï¼ˆ0-indexedã§6ï¼‰
                     {
                         obj.transform.rotation = Quaternion.Euler(0f, 180f, 180f);
                     }
@@ -133,13 +127,10 @@ public class Map3 : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         Debug.Log("Map4 Update running. moveBlocks count: " + moveBlocks.Count + " Time.time: " + Time.time + " in scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
