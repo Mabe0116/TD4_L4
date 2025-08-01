@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,9 +9,9 @@ public class PauseScript : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField]
-    // ƒ|[ƒY‚µ‚½‚É•\¦‚·‚éUI‚ÌƒvƒŒƒnƒu
+    // ãƒãƒ¼ã‚ºã—ãŸæ™‚ã«è¡¨ç¤ºã™ã‚‹UIã®ãƒ—ãƒ¬ãƒãƒ–
     private GameObject pauseUIPrefab;
-    // ƒ|[ƒYUI‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+    // ãƒãƒ¼ã‚ºUIã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
     private GameObject pauseUIInstance;
 
     public Button yesButton;
@@ -32,7 +32,7 @@ public class PauseScript : MonoBehaviour
                 pauseUIInstance = GameObject.Instantiate(pauseUIPrefab) as GameObject;
                 Time.timeScale = 0f;
 
-                // ƒ{ƒ^ƒ“‚ğqƒIƒuƒWƒFƒNƒg‚©‚ç’T‚·
+                // ãƒœã‚¿ãƒ³ã‚’å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰æ¢ã™
                 yesButton = pauseUIInstance.transform.Find("YesButton").GetComponent<Button>();
                 noButton = pauseUIInstance.transform.Find("NoButton").GetComponent<Button>();
             } else {
@@ -43,7 +43,7 @@ public class PauseScript : MonoBehaviour
 
         string nextSceneName = "Title";
 
-        // pause’†‚Ì‚İA/DƒL[‚ğó‚¯•t‚¯‚é
+        // pauseä¸­ã®ã¿A/Dã‚­ãƒ¼ã‚’å—ã‘ä»˜ã‘ã‚‹
         if (pauseUIInstance != null)
         {
             if (Input.GetKeyDown(KeyCode.A))

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,23 +6,21 @@ using UnityEngine.UI;
 public class IdleOperationHint : MonoBehaviour
 {
     public GameObject operationHintImage;
-    public float idleTime = 5.0f;   //‰½•b‘€ì‚ª‚È‚©‚Á‚½‚çƒqƒ“ƒg•\¦‚·‚é‚©
+    public float idleTime = 5.0f;   //ä½•ç§’æ“ä½œãŒãªã‹ã£ãŸã‚‰ãƒ’ãƒ³ãƒˆè¡¨ç¤ºã™ã‚‹ã‹
 
-    private float lastInputTime; //ÅŒã‚É‘€ì‚ª‚ ‚Á‚½ŠÔ
-    private bool isHintVisible; //Œ»İƒqƒ“ƒg‚ª•\¦‚³‚ê‚Ä‚¢‚é‚©
+    private float lastInputTime; //æœ€å¾Œã«æ“ä½œãŒã‚ã£ãŸæ™‚é–“
+    private bool isHintVisible; //ç¾åœ¨ãƒ’ãƒ³ãƒˆãŒè¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹ã‹
 
-    // Start is called before the first frame update
     void Start()
     {
         lastInputTime = Time.time;
         if (operationHintImage != null)
         {
-            operationHintImage.SetActive(false);    //Å‰‚Í”ñ•\¦
+            operationHintImage.SetActive(false);   
         }
         isHintVisible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetAxis("Horizontal") != 0 | Input.GetKeyDown(KeyCode.Space))
@@ -30,44 +28,38 @@ public class IdleOperationHint : MonoBehaviour
             lastInputTime = Time.time;
             if (isHintVisible)
             {
-                HideOperationHint(); //ƒqƒ“ƒg‚ª•\¦’†‚È‚ç”ñ•\¦‚É
+                HideOperationHint(); //ãƒ’ãƒ³ãƒˆãŒè¡¨ç¤ºä¸­ãªã‚‰éè¡¨ç¤ºã«
             }
 
         }
 
-        //‘€ì‚ªˆê’èŠÔ‚È‚©‚Á‚½‚©‚Ç‚¤‚©
+        //æ“ä½œãŒä¸€å®šæ™‚é–“ãªã‹ã£ãŸã‹ã©ã†ã‹
         if (Time.time - lastInputTime >= idleTime)
         {
             if (!isHintVisible)
             {
-                ShowOperationHint(); // ƒqƒ“ƒg‚ª•\¦‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î•\¦
+                ShowOperationHint(); // ãƒ’ãƒ³ãƒˆãŒè¡¨ç¤ºã•ã‚Œã¦ã„ãªã‘ã‚Œã°è¡¨ç¤º
             }
         }
     }
 
-    /// <summary>
-    /// ‘€ìà–¾‚ğ•\¦‚·‚é
-    /// </summary>
     void ShowOperationHint()
     {
         if (operationHintImage != null)
         {
             operationHintImage.SetActive(true);
             isHintVisible = true;
-            Debug.Log("‘€ì‚ªŒŸo‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½B‘€ìà–¾‚ğ•\¦‚µ‚Ü‚·B");
+            Debug.Log("æ“ä½œãŒæ¤œå‡ºã•ã‚Œã¾ã›ã‚“ã§ã—ãŸã€‚æ“ä½œèª¬æ˜ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚");
         }
     }
 
-    /// <summary>
-    /// ‘€ìà–¾‚ğ”ñ•\¦‚É‚·‚é
-    /// </summary>
     void HideOperationHint()
     {
         if (operationHintImage != null)
         {
             operationHintImage.SetActive(false);
             isHintVisible = false;
-            Debug.Log("‘€ì‚ªŒŸo‚³‚ê‚Ü‚µ‚½B‘€ìà–¾‚ğ”ñ•\¦‚É‚µ‚Ü‚·B");
+            Debug.Log("æ“ä½œãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚æ“ä½œèª¬æ˜ã‚’éè¡¨ç¤ºã«ã—ã¾ã™ã€‚");
         }
     }
 }

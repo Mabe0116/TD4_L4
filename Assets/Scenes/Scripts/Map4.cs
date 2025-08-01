@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -9,12 +9,7 @@ public class Map4 : MonoBehaviour
     public GameObject block;
     public GameObject goalFlag;
     public GameObject spike;
-
-    //private List<Transform> moveBlocks = new List<Transform>();
-
     private Vector3 MoveBlock;
-
-    //private Vector3 MoveBlock2;
 
     public TextAsset csvFile;
     int[,] map2;
@@ -38,7 +33,7 @@ public class Map4 : MonoBehaviour
 
     void LoadCSV()
     {
-        //CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+        //CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
         string[] lines = csvFile.text.Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
@@ -68,7 +63,7 @@ public class Map4 : MonoBehaviour
         MoveBlock = transform.position;
 
 
-        //ƒ}ƒbƒvƒ`ƒbƒv‚Å‚Ì•`‰æ
+        //ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã§ã®æç”»
         for (int y = 0; y < map2.GetLength(0); y++)
         {
             for (int x = 0; x < map2.GetLength(1); x++)
@@ -95,21 +90,21 @@ public class Map4 : MonoBehaviour
                     obj.tag = "MoveBlock";
                     obj.transform.localScale = new Vector3(4f, 1f, 1f);
 
-                    // “®‚­ƒuƒƒbƒN‚Ì“®ì§ŒäƒXƒNƒŠƒvƒg‚ğƒAƒ^ƒbƒ`
+                    // å‹•ããƒ–ãƒ­ãƒƒã‚¯ã®å‹•ä½œåˆ¶å¾¡ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã‚¢ã‚¿ãƒƒãƒ
                     if (obj.GetComponent<MovingBlockController>() == null)
                     {
                         obj.AddComponent<MovingBlockController>();
                     }
 
-                    // Rigidbody ‚ğ’Ç‰Ái•K—v‚È‚çj
+                    // Rigidbody ã‚’è¿½åŠ ï¼ˆå¿…è¦ãªã‚‰ï¼‰
                     if (obj.GetComponent<Rigidbody>() == null)
                     {
                         Rigidbody rb = obj.AddComponent<Rigidbody>();
-                        rb.isKinematic = true;     // ©•ª‚Å‚Í•¨—“I‚É“®‚©‚È‚¢iTransform‚Å“®‚­ê‡‚Ítruej
-                        rb.useGravity = false;     // d—Í‚àƒIƒti“®‚©‚µ‚½‚¢•ûŒü‚É‚¾‚¯“®‚©‚·j
+                        rb.isKinematic = true;     // è‡ªåˆ†ã§ã¯ç‰©ç†çš„ã«å‹•ã‹ãªã„ï¼ˆTransformã§å‹•ãå ´åˆã¯trueï¼‰
+                        rb.useGravity = false;     // é‡åŠ›ã‚‚ã‚ªãƒ•ï¼ˆå‹•ã‹ã—ãŸã„æ–¹å‘ã«ã ã‘å‹•ã‹ã™ï¼‰
                     }
 
-                    // ƒRƒ‰ƒCƒ_[‚ğƒgƒŠƒK[‚É‚·‚éi‚È‚¯‚ê‚Î’Ç‰Áj
+                    // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒˆãƒªã‚¬ãƒ¼ã«ã™ã‚‹ï¼ˆãªã‘ã‚Œã°è¿½åŠ ï¼‰
                     Collider col = obj.GetComponent<Collider>();
                     if (col == null)
                     {
@@ -117,21 +112,21 @@ public class Map4 : MonoBehaviour
                     }
                     col.isTrigger = false;
 
-                    // š‚±‚±‚ÉƒZƒ“ƒT[‚ğ’Ç‰Á
+                    // â˜…ã“ã“ã«ã‚»ãƒ³ã‚µãƒ¼ã‚’è¿½åŠ 
                     GameObject sensor = new GameObject("PlayerSensor");
                     sensor.transform.parent = obj.transform;
-                    sensor.transform.localPosition = new Vector3(0f, 0.6f, 0f); // ƒuƒƒbƒN‚Ìã‚É”z’u
+                    sensor.transform.localPosition = new Vector3(0f, 0.6f, 0f); // ãƒ–ãƒ­ãƒƒã‚¯ã®ä¸Šã«é…ç½®
 
                     BoxCollider sensorCollider = sensor.AddComponent<BoxCollider>();
                     sensorCollider.isTrigger = true;
-                    sensorCollider.size = new Vector3(4f, 0.2f, 1f);  // •½‚×‚Á‚½‚­Aã‚ÉL‚°‚é
+                    sensorCollider.size = new Vector3(4f, 0.2f, 1f);  // å¹³ã¹ã£ãŸãã€ä¸Šã«åºƒã’ã‚‹
 
-                    sensor.AddComponent<MovingBlockSensor>();  // © ƒZƒ“ƒT[ˆ—ƒXƒNƒŠƒvƒg
+                    sensor.AddComponent<MovingBlockSensor>();  // â† ã‚»ãƒ³ã‚µãƒ¼å‡¦ç†ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 
-                    // « ‰º‚ÌƒvƒŒƒCƒ„[—pƒZƒ“ƒT[id—Í‚ª‹tŒü‚«‚Èê‡—pj
+                    // â†“ ä¸‹ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”¨ã‚»ãƒ³ã‚µãƒ¼ï¼ˆé‡åŠ›ãŒé€†å‘ããªå ´åˆç”¨ï¼‰
                     GameObject sensorBottom = new GameObject("PlayerSensorBottom");
                     sensorBottom.transform.parent = obj.transform;
-                    sensorBottom.transform.localPosition = new Vector3(0f, -0.6f, 0f); // ƒuƒƒbƒN‚Ì‰º‚É”z’u
+                    sensorBottom.transform.localPosition = new Vector3(0f, -0.6f, 0f); // ãƒ–ãƒ­ãƒƒã‚¯ã®ä¸‹ã«é…ç½®
 
                     BoxCollider bottomCol = sensorBottom.AddComponent<BoxCollider>();
                     bottomCol.isTrigger = true;
@@ -139,7 +134,7 @@ public class Map4 : MonoBehaviour
 
                     sensorBottom.AddComponent<MovingBlockSensor>();
 
-                    float amplitude = (y == 12 || y == 6) ? 6.0f : 2.0f; // © y==12‚¾‚¯U‚ê•‘å‚«‚­
+                    float amplitude = (y == 12 || y == 6) ? 6.0f : 2.0f; // â† y==12ã ã‘æŒ¯ã‚Œå¹…å¤§ãã
                     moveBlocks.Add(new MovingBlock(obj.transform, amplitude));
 
                     MovingBlockController controller = obj.GetComponent<MovingBlockController>();
@@ -159,7 +154,7 @@ public class Map4 : MonoBehaviour
                 if (map2[y, x] == 5)
                 {
                     GameObject obj = Instantiate(block, position, Quaternion.identity);
-                    // “§–¾“x‚ğİ’è
+                    // é€æ˜åº¦ã‚’è¨­å®š
                     Renderer rend = obj.GetComponent<Renderer>();
                     if (rend != null)
                     {
@@ -180,11 +175,11 @@ public class Map4 : MonoBehaviour
                 }
                 if (map2[y, x] == 6)
                 {
-                    //ƒS[ƒ‹
+                    //ã‚´ãƒ¼ãƒ«
                     GameObject obj = Instantiate(goalFlag, position, Quaternion.identity);
                     obj.tag = "Goal";
 
-                    if (y == 13) // © CSV‚Ìã‚©‚ç7s–Úi0-indexed‚Å6j
+                    if (y == 13) // â† CSVã®ä¸Šã‹ã‚‰7è¡Œç›®ï¼ˆ0-indexedã§6ï¼‰
                     {
                         obj.transform.rotation = Quaternion.Euler(0f, 180f, 180f);
                     }
@@ -196,23 +191,18 @@ public class Map4 : MonoBehaviour
 
                     if (y == 10 || y == 12 || y == 13)
                     {
-                        // Z²•ûŒü‚É180“x‰ñ“]iã‰º”½“]j
+                        // Zè»¸æ–¹å‘ã«180åº¦å›è»¢ï¼ˆä¸Šä¸‹åè»¢ï¼‰
                         obj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
                     }
-
-                   // Debug.Log($"Spike spawned at ({x},{y}) world pos {position}");
                 }
             }
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
        
     }
-
-    // Update is called once per frame
     void Update()
     {
         foreach (MovingBlock move in moveBlocks)

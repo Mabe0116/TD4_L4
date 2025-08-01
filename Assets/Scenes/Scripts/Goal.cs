@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -16,7 +16,6 @@ public class Goal : MonoBehaviour
     private static bool isUpPlayerInGoal = false;
     private static bool isBottomPlayerInGoal = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         isGameCleared = false;
@@ -31,10 +30,8 @@ public class Goal : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-   
         // 時間が止まっていて、ゲームがクリア済み、かつ Space キーを押したら再開
         if (isGameCleared && Time.timeScale == 0f && Input.GetKeyDown(KeyCode.Space))
         {
@@ -102,7 +99,7 @@ public class Goal : MonoBehaviour
             isBottomPlayerInGoal = true;
         }
 
-        //二つゴールに入っていたら
+        //二人がゴールに入っていたら
         if (isUpPlayerInGoal && isBottomPlayerInGoal && !isGameCleared)
         {
             if (spawnedClearUI == null)
@@ -127,12 +124,10 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("UpPlayer"))
         {
             isUpPlayerInGoal = false;
-            //Debug.Log("isUpPlayerHitGoal");
         }
         else if (other.CompareTag("BottomPlayer"))
         {
             isBottomPlayerInGoal = false;
-            //Debug.Log("isBottomPlayerHitGoal");
         }
     }
 

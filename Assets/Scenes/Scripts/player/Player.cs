@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     private Animator animator;
     private bool isBlock = true;
-    public bool canControl = true; // ‘¼ƒXƒNƒŠƒvƒg‚©‚ç‚àƒAƒNƒZƒX‚Å‚«‚é‚æ‚¤‚É public ‚É
+    public bool canControl = true; // ä»–ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‹ã‚‰ã‚‚ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹ã‚ˆã†ã« public ã«
     private ParticleSystem dustParticle;
 
 
@@ -27,21 +27,21 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         dustParticle = GetComponent<ParticleSystem>();
 
-        // ƒV[ƒ“‚ªƒ^ƒCƒgƒ‹ƒV[ƒ“‚Å‚ ‚ê‚ÎA‰Šú‰»‚ÉƒAƒjƒ[ƒVƒ‡ƒ“‚ğIdle‚Éİ’è
+        // ã‚·ãƒ¼ãƒ³ãŒã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã§ã‚ã‚Œã°ã€åˆæœŸåŒ–æ™‚ã«ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’Idleã«è¨­å®š
         if (SceneManager.GetActiveScene().name == "title")
         {
             if (animator != null)
             {
-                animator.Play("Walk", 0, 0f); // IdleƒXƒe[ƒg‚ÌÅ‰‚©‚çÄ¶
+                animator.Play("Walk", 0, 0f); // Idleã‚¹ãƒ†ãƒ¼ãƒˆã®æœ€åˆã‹ã‚‰å†ç”Ÿ
                 animator.SetBool("Walk", true);
                 animator.SetBool("Idle", false);
                 animator.SetBool("Jump", false);
                 animator.SetBool("fall", false);
-                // ƒ^ƒCƒgƒ‹ƒV[ƒ“‚Å‚ÍAnimator‚ğ–³Œø‰»‚·‚é‚±‚Æ‚ÅA
-                // ‘¼‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‘JˆÚ‚ğ–h‚®
+                // ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã§ã¯Animatorã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã€
+                // ä»–ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é·ç§»ã‚’é˜²ã
                 animator.enabled = false;
             }
-            // ƒ^ƒCƒgƒ‹ƒV[ƒ“‚Å‚ÍƒvƒŒƒCƒ„[‚Ì•¨—‰‰Z‚à–³Œø‰»‚·‚éi•K—v‚Å‚ ‚ê‚Îj
+            // ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã§ã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç‰©ç†æ¼”ç®—ã‚‚ç„¡åŠ¹åŒ–ã™ã‚‹ï¼ˆå¿…è¦ã§ã‚ã‚Œã°ï¼‰
             rb.isKinematic = true;
             rb.velocity = Vector3.zero;
         }
@@ -74,18 +74,18 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector3(v.x, v.y, 0);
 
-        // RƒL[‚ÅƒŠƒZƒbƒg
+        // Rã‚­ãƒ¼ã§ãƒªã‚»ãƒƒãƒˆ
         if (Input.GetKeyDown(KeyCode.R) && !Goal.IsGameCleared)
         {
-            StartCoroutine(RespawnAfterDelay(0.5f)); // © ƒRƒ‹[ƒ`ƒ“‚ğŠJn
+            StartCoroutine(RespawnAfterDelay(0.5f)); // â† ã‚³ãƒ«ãƒ¼ãƒãƒ³ã‚’é–‹å§‹
         }
 
-        // ‰¡ˆÚ“®
+        // æ¨ªç§»å‹•
         Vector3 currentEulerAngles = transform.rotation.eulerAngles;
         float targetYRotation = currentEulerAngles.y;
 
 
-        // ‰¡ˆÚ“®
+        // æ¨ªç§»å‹•
         if (Input.GetKey(KeyCode.D))
         {
             v.x = moveSpeed;
@@ -112,12 +112,12 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(currentEulerAngles.x, targetYRotation, currentEulerAngles.z);
 
-        // ƒWƒƒƒ“ƒvˆ—
+        // ã‚¸ãƒ£ãƒ³ãƒ—å‡¦ç†
         if (isBlock)
         {
             if (animator != null)
             {
-                animator.SetBool("Jump", false); // ’n–Ê‚É‚¢‚é‚Ì‚ÅAƒWƒƒƒ“ƒvƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~
+                animator.SetBool("Jump", false); // åœ°é¢ã«ã„ã‚‹ã®ã§ã€ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
                 animator.SetBool("fall", false);
             }
                 Debug.DrawRay(rayPosition, rayDirection * distance, Color.red);
@@ -145,20 +145,20 @@ public class Player : MonoBehaviour
             }
         }
 
-        //‘«‚Ì‹OÕ‚Ìƒp[ƒeƒBƒNƒ‹§Œä
+        //è¶³ã®è»Œè·¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åˆ¶å¾¡
         var emission = dustParticle.emission;
         if (isBlock && animator.GetBool("Walk")) 
         {
             if (!emission.enabled)
             {
-                emission.enabled = true; // ƒp[ƒeƒBƒNƒ‹Às
+                emission.enabled = true; // ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å®Ÿè¡Œ
             }
         }
         else 
         {
             if (emission.enabled)
             {
-                emission.enabled = false; // ƒp[ƒeƒBƒNƒ‹‚ğ~‚ß‚é
+                emission.enabled = false; // ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æ­¢ã‚ã‚‹
             }
         }
 
@@ -209,13 +209,13 @@ public class Player : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         float y = 0;
 
-        // Œ»İˆÊ’u‚Å”š”­ƒp[ƒeƒBƒNƒ‹‚ğo‚·
+        // ç¾åœ¨ä½ç½®ã§çˆ†ç™ºãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å‡ºã™
         Instantiate(bombParticle, transform.position, Quaternion.identity);
 
         if (sceneName == "Map1")
         {
             y = gravityScale < 0 ? 0.4f : 2.4f;
-            transform.position = new Vector3(3.0f, y, transform.position.z); // © XÀ•W‚ğ‰E‚Éi—áF3.0fj
+            transform.position = new Vector3(3.0f, y, transform.position.z); // â† Xåº§æ¨™ã‚’å³ã«ï¼ˆä¾‹ï¼š3.0fï¼‰
         }
         else if (sceneName == "Map2")
         {
