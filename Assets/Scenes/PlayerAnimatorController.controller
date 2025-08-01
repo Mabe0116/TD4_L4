@@ -95,6 +95,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: Idle
+    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: fall
     m_EventTreshold: 0
@@ -220,7 +223,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 94eb70922512d034cbe7d6618af0a106, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 1b103eaabbb3f1e4b942d3105e485242, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
