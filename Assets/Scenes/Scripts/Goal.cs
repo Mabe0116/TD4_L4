@@ -65,14 +65,14 @@ public class Goal : MonoBehaviour
             }
             else if (currentSceneName == "Map4")
             {
-                nextSceneName = "Map5"; 
+                nextSceneName = "Title"; 
             }
-            else if (currentSceneName == "Map5")
-            {
-                // 例えば、Map5が最終ステージならタイトルに戻るなど
-                nextSceneName = "Map1"; // 例: 最後のシーンからタイトルへ
-                Debug.Log("Game Cleared! Returning to Title Scene.");
-            }
+            //else if (currentSceneName == "Map5")
+            //{
+            //    // 例えば、Map5が最終ステージならタイトルに戻るなど
+            //    nextSceneName = "Map1"; // 例: 最後のシーンからタイトルへ
+            //    Debug.Log("Game Cleared! Returning to Title Scene.");
+            //}
 
             if (!string.IsNullOrEmpty(nextSceneName))
             {
