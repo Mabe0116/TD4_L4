@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Player otherPlayer;
 
     private Animator animator;
+    private AudioSource audioSource;
     private bool isBlock = true;
     public bool canControl = true; // 他スクリプトからもアクセスできるように public に
     private ParticleSystem dustParticle;
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
         rb.useGravity = false;
         animator = GetComponent<Animator>();
         dustParticle = GetComponent<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
+
 
         // シーンがタイトルシーンであれば、初期化時にアニメーションをIdleに設定
         if (SceneManager.GetActiveScene().name == "title")
@@ -133,6 +136,11 @@ public class Player : MonoBehaviour
                     animator.SetBool("Walk", false);
                     animator.SetBool("Jump", true);
                 }
+                if (audioSource != null && audioSource.clip != null)
+                {
+                    audioSource.Play();
+                }
+
             }
         }
         else
